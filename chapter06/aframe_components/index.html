@@ -1,0 +1,85 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Chapter 6 - A-Frame boilerplate</title>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
+    <link rel="stylesheet" type="text/css" href="styles.css" media="all" />
+
+    <script src="https://unpkg.com/aframe@1.4.2/dist/aframe-master.js"></script>
+    <script src="https://unpkg.com/aframe-extras@7.1.0/dist/aframe-extras.min.js"></script>
+    <script src="https://unpkg.com/three@0.147.0/examples/js/loaders/RGBELoader.js"></script>
+
+    <script type="module" src="js/components.js"></script>
+    <script type="module" src="js/main.js"></script>
+  </head>
+
+  <body style="touch-action: none">
+    
+    <a-scene
+      scene-environment="hdrImage:./assets/images/pisa.hdr; hdrExposure: 1;"
+    >
+
+      <a-assets>
+        <img id="texture" src="./assets/images/texture.jpg" />
+        <a-asset-item id="character-glb" src="./assets/models/AnimatedCharacter.glb"></a-asset-item>
+        <a-asset-item id="helmet-glb" src="./assets/models/DamagedHelmet.glb"></a-asset-item>
+        <a-asset-item id="candle-holder-glb" src="./assets/models/CandleHolder.glb"></a-asset-item>
+      </a-assets>
+
+      <a-entity camera id="camera" position="0 1 2" look-controls wasd-controls look-ahead="enabled: true" ></a-entity>
+
+      <a-entity id="character" gltf-model="#character-glb" position="-1 0 0"
+        animation-mixer="clip: Idle; crossFadeDuration: 0.5;"
+        custom-component="parameter1: this is a test; parameter2: 99; parameter3: false"
+        shadow="cast:true"
+      ></a-entity>
+
+      <a-entity id="helmet" gltf-model="#helmet-glb" position="0 1 0" scale="0.5 0.5 0.5"
+        shadow="cast:true"
+      ></a-entity>
+
+      <a-entity id="candle-holder" gltf-model="#candle-holder-glb" position="1 0 0" scale="2 2 2"
+        shadow="cast:true"
+      ></a-entity>
+
+      <a-entity id="light01" light="castShadow: true; intensity: 0.8; shadowBias:-0.00004;" position="1 2 1.7"></a-entity>
+      <a-entity id="light02" light="castShadow: true; intensity: 0.8; shadowBias:-0.00004;" position="-1 3 1.7"></a-entity>
+
+      <a-plane position="0 0 0" rotation="-90 0 0" shadow="receive: true" width="15" height="15" color="#404040"></a-plane>
+      <a-sky color="#ECECEC"></a-sky>
+    </a-scene>
+
+    <div id="ui">
+
+      <div id="look_ahead_message" class="fade">
+        <h1>Look ahead!</h1>
+      </div>
+
+      <select id="character_dropdown">
+        <option value="">Character T-Shirt Color</option>
+        <option value="0xff0000">Red</option>
+        <option value="0x00ff00">Blue</option>
+        <option value="0x0000ff">Green</option>
+      </select>
+
+
+      <button id="button_helmet_float" class="">Helmet Float</button>
+
+
+      <select id="candle_glass_color">
+        <option value="">Candle Glass Color</option>
+        <option value="0xff0000">Red</option>
+        <option value="0x00ff00">Blue</option>
+        <option value="0x0000ff">Green</option>
+      </select>
+
+      
+    </div>
+
+
+  </body>
+</html>

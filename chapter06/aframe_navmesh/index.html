@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Chapter 6 - A-Frame Navmesh</title>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
+    <link rel="stylesheet" type="text/css" href="styles.css" media="all" />
+
+    <script src="https://unpkg.com/aframe@1.4.2/dist/aframe-master.js"></script>
+    <script src="https://unpkg.com/aframe-extras@7.1.0/dist/aframe-extras.min.js"></script>
+
+    <script type="module" src="js/main.js"></script>
+  </head>
+
+  <body style="touch-action: none">
+    
+    <a-scene>
+
+      <a-assets>
+        <a-asset-item id="walls-glb" src="./assets/models/walls.glb"></a-asset-item>
+        <a-asset-item id="navmesh-glb" src="./assets/models/navmesh.gltf"></a-asset-item>
+      </a-assets>
+
+      <a-entity id="rig" movement-controls="constrainToNavMesh: true" position="0 0 3" rotation="0 0 0">
+        <a-entity camera="near: 0.005; fov:75;" id="camera" position="0 2 0" look-controls >
+        </a-entity>
+      </a-entity>
+
+      <a-entity id="navmesh" gltf-model="#navmesh-glb" position="0 1 0" visible="false" nav-mesh=""></a-entity>
+      <a-entity id="walls" gltf-model="#walls-glb" position="0 0 0" visible="true" nav-mesh=""></a-entity>
+
+      <a-plane position="0 0 0" rotation="-90 0 0" width="75" height="75" color="#7BC8A4"></a-plane>
+
+      <a-sky color="#ECECEC"></a-sky>
+      
+    </a-scene>
+
+
+  </body>
+</html>

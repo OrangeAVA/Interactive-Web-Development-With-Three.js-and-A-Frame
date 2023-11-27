@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+  <head>
+    <title></title>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
+    <link rel="stylesheet" type="text/css" href="styles.css" media="all" />
+
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://unpkg.com/three@0.153.0/build/three.module.js"
+        }
+      }
+    </script>
+    <script type="module" src="js/main.js"></script>
+  </head>
+
+  <body style="touch-action: none">
+    <div id="ui" class="fade">
+      <button data-animation="Idle">Idle</button>
+      <button data-animation="Elbow punching">Elbow punching</button>
+      <button data-animation="Fist fighting">Fist fighting</button>
+      <button data-animation="Punch">Punch</button>
+      <button data-animation="Roundhouse kick">Roundhouse kick</button>
+      <button data-animation="Thriller">Thriller</button>
+    </div>
+    <div id="threejsContainer"></div>
+  </body>
+</html>

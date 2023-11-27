@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Chapter 6 - A-Frame boilerplate</title>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
+    <link rel="stylesheet" type="text/css" href="styles.css" media="all" />
+
+    <script src="https://unpkg.com/aframe@1.4.2/dist/aframe-master.js"></script>
+    <script src="https://unpkg.com/aframe-extras@7.1.0/dist/aframe-extras.min.js"></script>
+
+    <script type="module" src="js/main.js"></script>
+  </head>
+
+  <body style="touch-action: none">
+    
+    <a-scene>
+
+      <a-assets>
+        <img id="texture" src="./assets/images/texture.jpg" />
+      </a-assets>
+
+      <a-entity camera id="camera" position="0 1 2" look-controls wasd-controls></a-entity>
+
+      <a-box id="box" shadow="cast: true" position="0 1 0" color="#ff0000"></a-box>
+
+      <a-entity id="light" light="castShadow: true" position="0.8 2 1.7"></a-entity>
+
+      <a-plane position="0 0 0" rotation="-90 0 0" shadow="receive: true" width="4" height="4" color="#7BC8A4"></a-plane>
+      <a-sky color="#ECECEC"></a-sky>
+    </a-scene>
+
+    <div id="ui">
+      <button id="button_add">Add scale component</button>
+      <button id="button_remove">Remove scale component</button>
+      <button id="button_modify">Modify scale component</button>
+      <button id="button_color">Modify color</button>
+      <div>
+        <button id="button_less">-</button>
+        <button id="button_texture">Add texture</button>
+        <button id="button_plus">+</button>
+      </div>
+    </div>
+
+
+  </body>
+</html>

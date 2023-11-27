@@ -1,0 +1,77 @@
+body, html {
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+.fade {
+    opacity: 0;
+    visibility: hidden;
+    transition:
+        opacity 0.5s ease-in-out,
+        visibility 0.5s ease-in-out;
+    -moz-transition:
+        opacity 0.5s ease-in-out,
+        visibility 0.5s ease-in-out;
+    -webkit-transition:
+        opacity 0.5s ease-in-out,
+        visibility 0.5s ease-in-out;
+}
+
+.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+#ui {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 99;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: flex-end;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+}
+
+#ui button, #ui select {
+    margin: 10px 10px;
+    pointer-events: all;
+}
+
+#ui div {
+    margin-left: 50px;
+    width: 200px;
+}
+
+.disabled {
+    opacity: 0.5;
+}
+
+#look_ahead_message {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    pointer-events: false;
+}
+
+#look_ahead_message h1 {
+    padding: 50px;
+    width: 200px;
+    background-color: #0009;
+    text-align: center;
+    color: #fff;
+    -webkit-user-select: none;
+    -ms-user-select: none; 
+    user-select: none; 
+}

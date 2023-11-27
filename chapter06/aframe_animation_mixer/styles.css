@@ -1,0 +1,26 @@
+body, html {
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+#ui {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 99;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: flex-end;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+}
+
+#ui button {
+	margin: 20px;
+    pointer-events: all;
+}

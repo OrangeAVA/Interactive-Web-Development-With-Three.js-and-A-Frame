@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Chapter 6 - A-Frame Navmesh</title>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
+    <link rel="stylesheet" type="text/css" href="styles.css" media="all" />
+
+    <script src="https://unpkg.com/aframe@1.4.2/dist/aframe-master.js"></script>
+    <script src="https://unpkg.com/aframe-extras@7.1.0/dist/aframe-extras.min.js"></script>
+
+    <script type="module" src="js/main.js"></script>
+  </head>
+
+  <body style="touch-action: none">
+    
+    <a-scene>
+
+      <a-assets>
+      </a-assets>
+
+      <a-entity id="rig" wasd-controls position="0 0 2">
+        <a-entity camera="near: 0.005; fov:75;" id="camera" position="0 2 0" look-controls >
+        </a-entity>
+      </a-entity>
+
+      <a-sphere position="-6 1 -5" animation="property: position; from: -6 1 -5; to: -6 1 -10; dur: 1000; easing: linear; loop: true"></a-sphere>
+
+      <a-sphere position="-3 1 -5" animation="property: object3D.position.z; from: -5; to: -10; dur: 1000; easing: easeInOutCubic; loop: true; dir: alternate;"></a-sphere>
+
+      <a-sphere position="0 1 -5" animation="property: material.color; from: #ff0000; to: #ffff00; dur: 1000; easing: linear; loop: true"></a-sphere>
+
+      <a-box position="3 1 -5" color="#ff00ff"
+        animation__rotation_animation="property: object3D.rotation.y; from: 0; to: 180; dur: 2000; easing: easeInOutCubic; loop: true; dir: alternate;"
+        animation__scale_animation="property: scale; from: 1 1 1; to: 1.5 1.5 1.5; dur: 1000; easing: easeInOutElastic; loop: true; dir: alternate;"
+      ></a-box>
+
+      <a-box id="interactive_box" position="6 1 -5" color="#0000ff"
+        animation__scale_interactive="property: scale; from: 1 1 1; to: 1.5 1.5 1.5; dur: 1000; easing: easeInOutElastic; loop: false; startEvents: clickToScale"
+        animation__scale_back="property: scale; from: 1.5 1.5 1.5; to: 1 1 1; dur: 1000; easing: easeInOutElastic; loop: false; startEvents: backAnimation"
+      ></a-box>
+
+
+      <a-plane position="0 0 0" rotation="-90 0 0" width="75" height="75" color="#7BC8A4"></a-plane>
+
+      <a-sky color="#ECECEC"></a-sky>
+      
+    </a-scene>
+
+    <div id="ui">
+      <button id="button_box">Click to scale the cube</button>
+    </div>
+
+
+  </body>
+</html>

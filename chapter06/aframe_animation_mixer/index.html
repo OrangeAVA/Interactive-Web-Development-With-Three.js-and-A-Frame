@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Chapter 6 - A-Frame boilerplate</title>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
+    <link rel="stylesheet" type="text/css" href="styles.css" media="all" />
+
+    <script src="https://unpkg.com/aframe@1.4.2/dist/aframe-master.js"></script>
+    <script src="https://unpkg.com/aframe-extras@7.1.0/dist/aframe-extras.min.js"></script>
+
+    <script type="module" src="js/main.js"></script>
+  </head>
+
+  <body style="touch-action: none">
+    
+    <a-scene>
+
+      <a-assets>
+        <a-asset-item id="character-glb" src="./assets/models/AnimatedCharacter.glb"></a-asset-item>
+      </a-assets>
+
+      <a-entity camera id="camera" position="0 1 2" look-controls></a-entity>
+
+      <a-entity id="character" gltf-model="#character-glb" position="0 0 0"
+        animation-mixer="clip: Idle; crossFadeDuration: 0.5;"
+      ></a-entity>
+
+      <a-plane position="0 0 0" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane>
+      <a-sky color="#ECECEC"></a-sky>
+    </a-scene>
+
+    <div id="ui">
+      <button data-animation="Idle">Idle</button>
+      <button data-animation="Elbow punching">Elbow punching</button>
+      <button data-animation="Fist fighting">Fist fighting</button>
+      <button data-animation="Punch">Punch</button>
+      <button data-animation="Roundhouse kick">Roundhouse kick</button>
+      <button data-animation="Thriller">Thriller</button>
+    </div>
+
+
+  </body>
+</html>
