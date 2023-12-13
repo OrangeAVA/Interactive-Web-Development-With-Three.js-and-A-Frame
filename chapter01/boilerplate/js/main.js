@@ -6,4 +6,5 @@ window.addEventListener("load", function () {
 
 async function start() {
   document.write("Hello world!");
+  console.log(THREE);
 }

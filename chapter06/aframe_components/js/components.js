@@ -45,7 +45,7 @@ AFRAME.registerComponent('character-tshirt', {
   },
   init: function () {
     const scope = this;
-console.log(scope.data.color)
+
     scope.changeCandleColor = function(element, color) {
 
       const elementMesh = element.getObject3D('mesh').children[0];
