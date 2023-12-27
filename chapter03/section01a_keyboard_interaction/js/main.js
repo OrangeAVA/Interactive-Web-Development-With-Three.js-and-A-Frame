@@ -54,8 +54,7 @@ async function start() {
   scene.add(plane);
 
   document.addEventListener(
-    "keydown",
-    (event) => {
+    "keydown", (event) => {
       const keyName = event.key;
       switch (keyName) {
         case "ArrowUp":
@@ -76,8 +75,7 @@ async function start() {
   );
 
   document.addEventListener(
-    "keyup",
-    (event) => {
+    "keyup", (event) => {
       arrowPressed.up = false;
       arrowPressed.down = false;
       arrowPressed.right = false;

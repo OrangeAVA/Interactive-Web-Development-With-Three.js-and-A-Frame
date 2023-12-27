@@ -76,6 +76,7 @@ async function start() {
       case 82: // R
         transformControls.setMode("scale");
         break;
+        
       case 81: // Q
         transformControls.setSpace(
           transformControls.space === "local" ? "world" : "local",

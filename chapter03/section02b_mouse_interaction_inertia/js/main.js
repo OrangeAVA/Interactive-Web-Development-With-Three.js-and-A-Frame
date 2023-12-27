@@ -7,19 +7,10 @@ let acceleration = 0.001;
 let damping = 0.96;
 
 let dragFlag = false;
-let prevMousePos = {
-  x: 0,
-  y: 0,
-};
+let prevMousePos = { x: 0, y: 0 };
 
-var angVel = {
-  x: 0,
-  y: 0,
-};
-var angAcceleration = {
-  x: 0,
-  y: 0,
-};
+var angVel = { x: 0, y: 0 };
+var angAcceleration = { x: 0, y: 0 };
 var angDamping = 0.06;
 
 window.addEventListener("load", function () {
@@ -104,7 +95,7 @@ async function start() {
     false,
   );
 
-  document.body.addEventListener("mousedown", function (event) {
+  document.body.addEventListener("pointerdown", function (event) {
     dragFlag = true;
     prevMousePos.x = event.clientX;
 
@@ -114,19 +105,16 @@ async function start() {
     angAcceleration.y = 0;
   });
 
-  document.body.addEventListener("mouseup", function () {
+  document.body.addEventListener("pointerup", function () {
     dragFlag = false;
   });
 
-  document.body.addEventListener("mousemove", function (event) {
+  document.body.addEventListener("pointermove", function (event) {
     if (!dragFlag) return;
 
     var deltaX = event.clientX - prevMousePos.x;
-
     cube.rotation.y += deltaX * 0.01;
-
     prevMousePos.x = event.clientX;
-
     angVel.x = deltaX * 0.01;
   });
 
@@ -155,9 +143,7 @@ async function start() {
 
     if (!dragFlag) {
       angAcceleration.x = -angVel.x * angDamping;
-
       angVel.x += angAcceleration.x;
-
       cube.rotation.y += angVel.x;
     }
 

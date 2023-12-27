@@ -2,10 +2,10 @@ import * as THREE from "three";
 import { RGBELoader } from "https://unpkg.com/three@0.153.0/examples/jsm/loaders/RGBELoader.js";
 
 let renderer, scene, container, camera;
+
 let ball;
 let gyroscopeData = { alpha: 0, beta: 0, gamma: 0 };
 let gyroscopeEnabled = false;
-
 const ballVel = new THREE.Vector3(0, 0, 0);
 const bounciness = -0.7;
 const minBounds = new THREE.Vector3(-1.25, 0, -2.25);
@@ -31,9 +31,7 @@ function deviceMotionStart() {
 }
 
 window.addEventListener("load", function () {
-  document
-    .querySelector("#permissionButton")
-    .addEventListener("click", function () {
+  documentquerySelector("#permissionButton").addEventListener("click", function () {
       deviceMotionStart();
     });
 });
@@ -114,11 +112,7 @@ async function start() {
 
       debugDiv.innerHTML = `alpha: ${gyroscopeData.alpha}<br>beta: ${gyroscopeData.beta}<br>gamma: ${gyroscopeData.gamma}`;
 
-      const acceleration = new THREE.Vector3(
-        Math.sin((gamma * (Math.PI / 180)) / 1000),
-        0,
-        Math.sin((beta * (Math.PI / 180)) / 1000),
-      );
+      const acceleration = new THREE.Vector3( Math.sin((gamma * (Math.PI / 180)) / 1000), 0, Math.sin((beta * (Math.PI / 180)) / 1000));
 
       ballVel.add(acceleration);
 
@@ -126,20 +120,12 @@ async function start() {
 
       if (ball.position.x < minBounds.x || ball.position.x > maxBounds.x) {
         ballVel.x *= bounciness;
-        ball.position.x = THREE.MathUtils.clamp(
-          ball.position.x,
-          minBounds.x,
-          maxBounds.x,
-        );
+        ball.position.x = THREE.MathUtils.clamp(ball.position.x, minBounds.x, maxBounds.x);
       }
 
       if (ball.position.z < minBounds.z || ball.position.z > maxBounds.z) {
         ballVel.z *= bounciness;
-        ball.position.z = THREE.MathUtils.clamp(
-          ball.position.z,
-          minBounds.z,
-          maxBounds.z,
-        );
+        ball.position.z = THREE.MathUtils.clamp( ball.position.z, minBounds.z, maxBounds.z);
       }
     }
   }

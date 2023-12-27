@@ -22,7 +22,7 @@ var angAcceleration = {
 };
 var angDamping = 0.06;
 
-let raycaster;
+let raycaster = new THREE.Raycaster();
 const cursorPos = new THREE.Vector2();
 
 const cubeColours = [0xff0000, 0xffff00, 0x0000ff, 0xf0f0f0];
@@ -78,7 +78,6 @@ async function start() {
   plane.receiveShadow = true;
   scene.add(plane);
 
-  raycaster = new THREE.Raycaster();
 
   document.addEventListener(
     "keydown",
@@ -113,7 +112,7 @@ async function start() {
     false,
   );
 
-  document.body.addEventListener("mousedown", function (event) {
+  document.body.addEventListener("pointerdown", function (event) {
     dragFlag = true;
     prevMousePos.x = event.clientX;
 
@@ -123,17 +122,17 @@ async function start() {
     angAcceleration.y = 0;
 
     clickRaycaster("Cube", function () {
-      const randomColour =
-        cubeColours[Math.floor(Math.random() * cubeColours.length)];
-      cube.material.color = new THREE.Color(randomColour);
+      const randomColour = cubeColours[Math.floor(Math.random() * cubeColours.length)];
+      cube.material.color.setHex(randomColour);
     });
+
   });
 
-  document.body.addEventListener("mouseup", function () {
+  document.body.addEventListener("pointerup", function () {
     dragFlag = false;
   });
 
-  document.body.addEventListener("mousemove", function (event) {
+  document.body.addEventListener("pointermove", function (event) {
     updateRaycaster(event);
 
     document.querySelector("#label").style.left = event.clientX + "px";
@@ -192,9 +191,13 @@ async function start() {
     raycaster.setFromCamera(cursorPos, camera);
     const intersects = raycaster.intersectObjects(scene.children, false);
 
+    //console.log(intersects);
+
     document.querySelector("#label").style.display = "none";
 
     if (intersects.length > 0) {
+      //console.log(intersects[0].object);
+
       document.querySelector("#label").style.display = "block";
       document.querySelector("#label").innerHTML = intersects[0].object.name;
     }

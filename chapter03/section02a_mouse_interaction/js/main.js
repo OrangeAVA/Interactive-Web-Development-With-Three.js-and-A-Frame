@@ -7,10 +7,7 @@ let acceleration = 0.001;
 let damping = 0.96;
 
 let dragFlag = false;
-let prevMousePos = {
-  x: 0,
-  y: 0,
-};
+let prevMousePos = { x: 0, y: 0 };
 
 window.addEventListener("load", function () {
   start();
@@ -94,22 +91,20 @@ async function start() {
     false,
   );
 
-  document.body.addEventListener("mousedown", function (event) {
+  document.body.addEventListener("pointerdown", function (event) {
     dragFlag = true;
     prevMousePos.x = event.clientX;
   });
 
-  document.body.addEventListener("mouseup", function () {
+  document.body.addEventListener("pointerup", function () {
     dragFlag = false;
   });
 
-  document.body.addEventListener("mousemove", function (event) {
+  document.body.addEventListener("pointermove", function (event) {
     if (!dragFlag) return;
 
     var deltaX = event.clientX - prevMousePos.x;
-
     cube.rotation.y += deltaX * 0.01;
-
     prevMousePos.x = event.clientX;
   });
 

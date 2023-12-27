@@ -1,0 +1,218 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Chapter 8 - A-Frame webVR template</title>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
+    <link rel="stylesheet" type="text/css" href="styles.css" media="all" />
+  
+ 
+    <script src="https://unpkg.com/aframe@1.4.2/dist/aframe-master.js"></script>
+    <script src="https://unpkg.com/aframe-extras@7.1.0/dist/aframe-extras.min.js"></script>
+
+    <!-- <script type="text/javascript" src="js/webxr.js"></script> -->
+
+    <script src="./js/components.js"></script>
+    <script type="module" src="js/main.js"></script>
+
+  </head>
+
+
+  <body style="touch-action: none">
+
+      <!-- <video id="video_mp4" loop crossorigin="anonymous" webkit-playsinline playsinline autoplay="false" loop="true" src="./assets/videos/video_manifest.mp4"></video> -->
+
+
+      <a-scene loading-screen="enabled:true; backgroundColor: black; dotsColor: gray"
+        renderer="antialias: true; colorManagement: true; physicallyCorrectLights: true;" 
+        vr-mode-ui="enabled: true" shadow="type: pcf" light="defaultLightsEnabled: true"
+        >
+
+        <a-assets>
+
+          <a-asset-item id="scene-glb" src="./assets/models/scene.glb"></a-asset-item>
+          <a-asset-item id="navMesh" src="./assets/models/navmesh.gltf"></a-asset-item>
+
+          <img id="sky" src="./assets/images/sky.jpg" />
+
+          <img id="icon_message_img" src="./assets/images/icon_message.jpg" />
+          <img id="icon_albuns_img" src="./assets/images/icon_albuns.jpg" />
+          <img id="icon_stories_img" src="./assets/images/icon_stories.jpg" />
+          <img id="icon_curiosidades_img" src="./assets/images/icon_curiosidades.jpg" />
+
+          <img id="stories01_img" src="./assets/images/stories01.jpg" />
+          <img id="stories02_img" src="./assets/images/stories02.jpg" />
+
+          <img id="escudo_img" src="./assets/images/escudo.jpg" />
+
+          <img id="close_button_img" src="./assets/images/close-button.png" />
+
+        </a-assets>
+
+        <a-entity raycaster="objects: .clickable; " cursor="fuse: false; rayOrigin: mouse"></a-entity>
+
+
+
+        <!-- Camera -->
+        <a-entity id="rig" movement-controls="constrainToNavMesh: true" position="9.9 0 -18.8" rotation="0 90 0">
+
+          <a-entity camera="near: 0.005; fov:75;" id="camera" position="0 2 0" look-controls="pointerLockEnabled: false" >
+              <a-entity id="npc" geometry="primitive: box; width:2; height:2; depth:2;" nav-agent="speed: 1.5" ></a-entity>
+          </a-entity>
+
+          <a-entity id="leftHand" oculus-touch-controls="hand: left" vive-controls="hand: left"></a-entity>
+          <a-entity id="rightHand" laser-controls oculus-touch-controls="hand: right" vive-controls="hand: right"></a-entity>
+
+      </a-entity>
+
+
+        <a-entity id="container" position="0 0 0">
+
+            <!-- Markers -->
+            <a-entity id="shortcut_mensagem" position="7.5 0 -14" geometry="primitive: triangle" material="" visible="false" rotation="0 180 0"></a-entity>
+
+
+            <a-entity id="shortcut_albuns_1" position="11 0 -4" geometry="primitive: triangle" material="" visible="false" rotation="0 180 0"></a-entity>
+            <a-entity id="shortcut_albuns_2" position="18 0 -8" geometry="primitive: triangle" material="" visible="false" rotation="0 359 0"></a-entity>
+
+            <a-entity id="shortcut_stories_1" position="-3 0 -4" geometry="primitive: triangle" material="" visible="false" rotation="0 90 0"></a-entity>
+            <a-entity id="shortcut_stories_2" position="-6 0 -8" geometry="primitive: triangle" material="" visible="false" rotation="0 -0 0"></a-entity>
+            
+            <a-entity id="shortcut_curiosidades_1" position="-9 0 -4" geometry="primitive: triangle" material="" visible="false" rotation="0 90 0"></a-entity>
+            <a-entity id="shortcut_curiosidades_2" position="-18 0 -8" geometry="primitive: triangle" material="" visible="false" rotation="0 -0 0"></a-entity>
+
+            <!-- Entities -->
+
+            
+
+            <!-- Exhibition -->
+            <a-entity id="scene_container" rotation="0 180 0">
+
+              <!-- NavMesh-->
+              <a-entity id="navmesh-Hello" nav-mesh position="0 .6 0" scale="1 1 1" gltf-model="#navMesh" visible="false"></a-entity>
+
+              <a-entity id="scene" gltf-model="#scene-glb" scale="1 1 1" position="0 -0.536 0" visible="true" shadow="receive: false">
+              </a-entity>
+
+              <a-entity id="intro" class="" position="-0.11099 3.37115 18.79451">
+
+                <a-entity id="introTitle" text__introtitle="align: right; side: double; value: EXPOSIção vIRTUAL\nGUILHERME ARANTES; color: #000000;  width: 1.06" scale="8 8 1" rotation="0 -90 0" position="0 -0.30927 -4.97801"></a-entity>
+                <a-entity id="introCopy" text__introcopy="side: double;  value: Venha conhecer minha História e muitas novidades andando livremente pelas salas dessa exposição virtual.; color: #000000; width: 0.74; wrapCount: 45.38; zOffset: 0" scale="7.8 7.8 6" rotation="0 -90 0" position="0 -0.31299 2.62066"></a-entity>
+
+              </a-entity>
+
+              <a-entity id="menu" position="-2 1 17.75" rotation="0 -90 0" scale="0.8 0.8 0.8">
+                <a-plane id="icon_message" class="clickable" rotation="" position="-2.5 0 0" shadow="cast: false" material="src: #icon_message_img;" geometry="height: 2; width: 2" scale=""></a-plane>
+                <a-plane id="icon_albuns" class="clickable" rotation="" position="" shadow="cast: false" material="src: #icon_albuns_img;" geometry="height: 2; width: 2" scale=""></a-plane>
+                <a-plane id="icon_stories" class="clickable" rotation="" position="2.5 0 0" shadow="cast: false" material="src: #icon_stories_img;" geometry="height: 2; width: 2" scale=""></a-plane>
+                <a-plane id="icon_curiosidades" class="clickable" rotation="" position="5 0 0" shadow="cast: false" material="src: #icon_curiosidades_img;" geometry="height: 2; width: 2" scale=""></a-plane>
+              </a-entity>
+
+
+              <a-entity id="videoEl" position="-7.5 -2.5 11">
+                <a-entity id="closeBtn" class="clickable" position="2.55 1.55 0.01" geometry="primitive: circle;width: 0.5; height: 1" material="src: #close_button_img" visible="" rotation="" scale="0.3 0.3 0.3"></a-entity>
+                <a-video id="video" src="#video_mp4" class="clickable" material="" geometry="width: 0.949; height: 0.539" rotation="" scale="6 6 6">
+                </a-video>
+              </a-entity>
+
+
+              <a-entity id="meusAlbuns" class="clickable" position="-18.83162 2.28236 24.93971">
+
+                <a-entity id="meusAlbunsTitle" text__albunstitle="align: center; side: double; value: A desordem\ndos Templários; color: #000000;" scale="13 13 1" rotation="0 180 0" position=""></a-entity>
+                <a-entity id="meusAlbunsCopy" text__albunscopy="side: double;  value: Novo album lançado em Agosto de 2021 contém 10 faixas inéditas, sendo 8 canções, um tema instrumental progressivo e, ainda, uma vinheta de sonoplastia conceitual. A Desordem dos Templários contem composições recentes escritas em Ávila, Espanha, onde vivo desde 2019. Nesse período de pandemia, estudei orquestração e música barroca, e essas influências clássicas, além da atmosfera medieval da cidade, ficaram profundamente impressas no material gravado. \n\nA maioria das músicas são doces baladas de piano, muito orgânicas, com muitas camadas de violões,criando um pop muito pessoal e clássico. A música-título 'A Desordem dos Templários' é uma mistura de baião nordestino, com forte percussão Zabumba, construindo uma mistura muito peculiar desse ritmo folclórico com uma estrutura de Rock Progressivo, formando um conjunto completo de muitas partes, em um total de sete minutos de duração.; color: #000000; width: 1.43; wrapCount: 83.81; zOffset: 0" scale="6 6 6" rotation="0 -90 0" position="6.22336 -0.37307 -6.26369"></a-entity>
+                
+                <a-entity id="album01_content01" position="-6.09473 -0.439 -4" rotation="0 90 0" visible="">
+                  <a-plane id="meusAlbunsAlbum01_a" class="clickable" position="0 -0.5 0" shadow="cast: false" material="src: #icon_albuns_img" geometry="height: 2; width: 2" scale="1.5 1.5 1.5"></a-plane>
+                  <a-entity id="meusAlbunsAlbum01Title_a" text__album01title="side: double;  value: Ouça aqui os \náudios do álbum; color: #000000; width: 1; wrapCount: 20; align: center" scale="3 3 3" position="0 1.60813 0"></a-entity>
+                </a-entity>
+
+                <a-entity id="album01_content02" position="-6.09473 -0.439 -8.5" rotation="0 90 0" visible="">
+                  <a-plane id="meusAlbunsAlbum01_b" class="clickable" position="0 -0.5 0" shadow="cast: false" material="src: #icon_albuns_img" geometry="height: 2; width: 2" scale="1.5 1.5 1.5"></a-plane>
+                  <a-entity id="meusAlbunsAlbum01Title_b" text__album01title="side: double;  value: Assista aqui os\nvídeos do álbum; color: #000000; width: 1; wrapCount: 20; align: center" scale="3 3 3" position="0 1.60813 0"></a-entity>
+                </a-entity>
+
+                <a-entity id="album01_content03" position="-6.09473 -0.439 -16" rotation="0 90 0" visible="">
+                  <a-plane id="meusAlbunsAlbum01_c" class="clickable" position="0 -0.5 0" shadow="cast: false" material="src: #icon_albuns_img" geometry="height: 2; width: 2" scale="1.5 1.5 1.5"></a-plane>
+                  <a-entity id="meusAlbunsAlbum01Title_c" text__album01title="side: double;  value: Assista aqui as\nvinhetas do álbum; color: #000000; width: 1.070; wrapCount: 20.930; align: center" scale="3 3 3" position="0 1.60813 0"></a-entity>
+                </a-entity>
+
+                <a-entity id="album01_content04" position="-6.09473 -0.439 -21" rotation="0 90 0" visible="">
+                  <a-plane id="meusAlbunsAlbum01_d" class="clickable" position="0 -0.5 0" shadow="cast: false" material="src: #icon_albuns_img" geometry="height: 2; width: 2" scale="1.5 1.5 1.5"></a-plane>
+                  <a-entity id="meusAlbunsAlbum01Title_d" text__album01title="side: double;  value: ASSISTA AQUI MINHA LIVE\ndO dIA 17 dE FEVEREIRO; color: #000000; width: 1.410; wrapCount: 31.340; align: center" scale="3 3 3" position="0 1.60813 0"></a-entity>
+                </a-entity>
+              </a-entity>
+
+
+
+              <a-entity id="stories" position="6.2 2.28236 24.93971">
+
+                <a-entity id="" text__curiosidadestitle="align: center; side: double; value: Minhas Histórias; color: #000000;" scale="13 13 1" rotation="0 -180 0" position=""></a-entity>
+                
+                
+                <a-entity id="stories01" position="6.09473 -0.536 -7.5" scale="1.1 1.1 1.1" rotation="0 -90 0">
+                  <a-plane id="stories01_btn" class="clickable" shadow="cast: false" material="src: #stories01_img" geometry="height: 2; width: 2" scale="1.13 1.13 1.13" position="0 -0.06084 0.01728"></a-plane>
+                  <a-entity id="" text__album01title="side: double; value: MEU MUNDO E NADA MAIS; color: #000000; width: 1.32; wrapCount: 26.8; align: center; " scale="2 2 2" position="0 1.34505 0"></a-entity>
+                </a-entity>
+
+                <a-entity id="stories02" position="-5.98719 -0.536 -5.81482" scale="1.3 1.3 1.3" rotation="0 90 0">
+                  <a-plane id="stories02_btn" class="clickable" shadow="cast: false" material="src: #stories02_img" geometry="height: 2; width: 2" scale="1.13 1.13 1.13" position="0 -0.06084 0.01728"></a-plane>
+                  <a-entity id="" text__album01title="side: double; value: BAILE DE MÁSCARAS; color: #000000; width: 1; wrapCount: 20.210; align: center; " scale="2 2 2" position="0 1.38778 0"></a-entity>
+                </a-entity>
+
+              </a-entity>
+
+
+
+              <a-entity id="curiosidades" position="18.6 2.28236 24.93971">
+
+                <a-entity id="" text__curiosidadestitle="align: center; side: double; value: Curiosidades; color: #000000;" scale="13 13 1" rotation="0 -180 0" position=""></a-entity>
+                
+                
+                <a-entity id="curiosidade01" position="6.09473 -0.1 -7.5" scale="1.1 1.1 1.1" rotation="0 -90 0">
+                  <a-plane id="curiosities01_btn" class="clickable" shadow="cast: false" material="src: #escudo_img" geometry="height: 2; width: 2" scale="1.13 1.13 1.13" position="0 -0.06084 0.01728"></a-plane>
+                  <a-entity id="" text__album01title="side: double; value: O ESCUdO dO TEMPLáRIO; color: #000000; width: 1.32; wrapCount: 26.8; align: center; " scale="2 2 2" position="0 1.34505 0"></a-entity>
+                  <a-entity id="" text__album01copy="side: double; value: Eu desenhei esse escudo para celebrar o lancamento do album. Fizemos uma tiragem limitada de artigos usando esse escudo. Clique no escudo para ver algumas fotos; color: #000000; width: 1.76; wrapCount: 50.89; align: center; " scale="2 2 2" position="0 -1.78038 0"></a-entity>
+                </a-entity>
+
+                <a-entity id="curiosidade02" position="-5.98719 -0.1 -5.81482" scale="1.3 1.3 1.3" rotation="0 90 0">
+                  <a-plane id="curiosities02_btn" class="clickable"  shadow="cast: false" material="src: #icon_curiosidades_img" geometry="height: 2; width: 2" scale="1.13 1.13 1.13" position="0 -0.06084 0.01728"></a-plane>
+                  <a-entity id="" text__album01title="side: double; value: NOTINHA MUSICAL; color: #000000; width: 1; wrapCount: 20; align: center; " scale="2 2 2" position="0 1.38778 0"></a-entity>
+                  <a-entity id="" text__album01copy="side: double; value: Eu uso essa notinha musical desde o início de minha carreira. Clique na notinha para ver algumas fotos.; color: #000000; width: 1.1; wrapCount: 40.51; align: center; " scale="2.2 2.2 2.2" position="0 -1.64874 0"></a-entity>
+                </a-entity>
+
+              </a-entity>
+
+              <!-- <a-plane material="" geometry="width: 55; height: 55" rotation="-90 0 0" aframe-mirror="color:#848485;intensity:0.4;textureWidth:2048;textureHeight:2048;"></a-plane> -->
+              
+            </a-entity>
+
+          </a-entity>
+
+
+          
+
+        <!-- Lights -->
+
+        <a-entity light="type: ambient; color: #fff; intensity: 3.2" position="0 5 0"></a-entity>
+        <a-entity id="LuzPrin1" light="intensity: 1.8; type: point; castShadow: true" rotation="" position="-11.00936 7 0"></a-entity>
+        <a-entity id="LuzPrin2" light="intensity: 1.8; type: point; castShadow: true" rotation="" position="11.00936 7 0"></a-entity>
+
+
+
+
+      </a-entity>
+
+
+
+        <a-sky src="#sky" material="" geometry="" rotation="0 90 0"></a-sky>
+
+
+    </a-scene>
+
+
+
+</body>
+
+</html>

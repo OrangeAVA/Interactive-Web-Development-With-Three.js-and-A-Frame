@@ -2,15 +2,8 @@ import * as THREE from "three";
 import { PointerLockControls } from "https://unpkg.com/three@0.153.0/examples/jsm/controls/PointerLockControls.js";
 
 let renderer, scene, container, camera, controls;
+
 const clock = new THREE.Clock();
-
-let moveForward = false;
-let moveBackward = false;
-let moveLeft = false;
-let moveRight = false;
-
-let isReady = false;
-
 const velocity = new THREE.Vector3();
 const direction = new THREE.Vector3();
 const vertex = new THREE.Vector3();
@@ -19,6 +12,11 @@ const increment = 100;
 const raycaster = new THREE.Raycaster();
 let raycasterOrigin = new THREE.Vector3();
 let raycasterDirection = new THREE.Vector3();
+
+let moveForward = false;
+let moveBackward = false;
+let moveLeft = false;
+let moveRight = false;
 
 const bulletArray = [];
 const enemyArray = [];
@@ -29,9 +27,13 @@ const hexColors = [
   0x1abc9c, 0xf39c12, 0xc0392b,
 ];
 
+let isReady = false;
+
+
 window.addEventListener("load", function () {
   start();
 });
+
 
 async function start() {
   renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -44,12 +46,7 @@ async function start() {
   container = document.querySelector("#threejsContainer");
   container.appendChild(renderer.domElement);
 
-  camera = new THREE.PerspectiveCamera(
-    60,
-    window.innerWidth / window.innerHeight,
-    0.1,
-    1000,
-  );
+  camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 0.1, 1000 );
   camera.position.set(0, 1, 5);
   scene.add(camera);
 
@@ -114,9 +111,12 @@ async function start() {
     direction.x = Number(moveRight) - Number(moveLeft);
     direction.normalize();
 
-    if (moveForward || moveBackward)
+    if (moveForward || moveBackward) {
       velocity.z -= direction.z * increment * delta;
-    if (moveLeft || moveRight) velocity.x -= direction.x * increment * delta;
+    }
+    if (moveLeft || moveRight) {
+      velocity.x -= direction.x * increment * delta
+    };
 
     controls.moveRight(-velocity.x * delta);
     controls.moveForward(-velocity.z * delta);
@@ -194,30 +194,15 @@ function createListeners() {
 
 function createEnemies(amount) {
   for (let i = 0; i <= amount - 1; i++) {
+
     const enemyInstance = enemyObject.clone();
-    enemyInstance.bBox = new THREE.Box3(
-      new THREE.Vector3(),
-      new THREE.Vector3(),
-    );
+    enemyInstance.bBox = new THREE.Box3( new THREE.Vector3(), new THREE.Vector3() );
 
-    const randomColour =
-      hexColors[Math.floor(Math.random() * hexColors.length)];
-    enemyInstance.material = new THREE.MeshStandardMaterial({
-      color: randomColour,
-    });
+    const randomColour = hexColors[Math.floor(Math.random() * hexColors.length)];
+    enemyInstance.material = new THREE.MeshStandardMaterial({ color: randomColour });
 
-    enemyInstance.position.set(
-      THREE.MathUtils.randFloat(-50, 50),
-      0,
-      THREE.MathUtils.randFloat(-50, 50),
-    );
-
-    enemyInstance.rotation.set(
-      0,
-      THREE.MathUtils.randFloat(-Math.PI, Math.PI),
-      0,
-    );
-
+    enemyInstance.position.set( THREE.MathUtils.randFloat(-50, 50), 0, THREE.MathUtils.randFloat(-50, 50) );
+    enemyInstance.rotation.set( 0, THREE.MathUtils.randFloat(-Math.PI, Math.PI), 0 );
     enemyInstance.bBox.setFromObject(enemyInstance);
 
     scene.add(enemyInstance);
@@ -229,10 +214,7 @@ function shoot() {
   const bullet = bulletObject.clone();
 
   bullet.geometry.computeBoundingSphere();
-  bullet.sphereBBox = new THREE.Sphere(
-    bullet.position,
-    bullet.geometry.boundingSphere.radius,
-  );
+  bullet.sphereBBox = new THREE.Sphere( bullet.position, bullet.geometry.boundingSphere.radius );
   scene.add(bullet);
 
   ///Set the bullet initial position and orientation based on the current camera position and orientation
@@ -254,18 +236,14 @@ function removeEnemy(enemy) {
 
 function updateBullets() {
   if (!isReady) return;
+
   [...bulletArray].forEach((bullet) => {
     bullet.getWorldPosition(raycasterOrigin);
     bullet.getWorldDirection(raycasterDirection);
 
     bullet.position.add(raycasterDirection.multiplyScalar(-0.5));
 
-    if (
-      bullet.position.x < -50 ||
-      bullet.position.x > 50 ||
-      bullet.position.z < -50 ||
-      bullet.position.z > 50
-    ) {
+    if ( bullet.position.x < -50 || bullet.position.x > 50 || bullet.position.z < -50 || bullet.position.z > 50 ) {
       removeBullet(bullet);
     }
 

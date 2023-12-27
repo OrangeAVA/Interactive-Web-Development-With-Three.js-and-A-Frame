@@ -5,6 +5,7 @@ let arrowPressed = { left: false, right: false, up: false, down: false };
 let vel = new THREE.Vector3(0, 0, 0);
 let acceleration = 0.001;
 let damping = 0.96;
+let increment = new THREE.Vector3();
 
 window.addEventListener("load", function () {
   start();
@@ -91,7 +92,6 @@ async function start() {
   animate();
 
   function animate() {
-    let increment = new THREE.Vector3();
 
     if (arrowPressed.left) increment.x -= acceleration;
     if (arrowPressed.right) increment.x += acceleration;

@@ -1,0 +1,93 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Chapter 8 - A-Frame webVR template</title>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
+    <link rel="stylesheet" type="text/css" href="styles.css" media="all" />
+  
+ 
+    <script src="https://unpkg.com/aframe@1.4.2/dist/aframe-master.js"></script>
+    <script src="https://unpkg.com/aframe-extras@7.1.0/dist/aframe-extras.min.js"></script>
+    <script src="https://unpkg.com/three@0.147.0/examples/js/loaders/RGBELoader.js"></script>
+
+
+    <script src="./js/components.js"></script>
+    <script type="module" src="js/main.js"></script>
+
+  </head>
+
+
+  <body style="touch-action: none">
+
+      <a-scene 
+        renderer="antialias: true; colorManagement: true; physicallyCorrectLights: true;" 
+        xr-mode-ui="enabled: true" shadow="type: pcf" light="defaultLightsEnabled: false"
+        loading-screen="enabled: true;"
+        scene-environment="hdrImage:./assets/images/pisa.hdr; hdrExposure: 1;"
+        gltf-model="dracoDecoderPath: https://ar-libs.blippar.com/components/draco/1.4.1/;"
+        raycaster="objects: .clickable"
+        cursor="fuse: false; rayOrigin: mouse"
+      >
+
+        <a-assets></a-assets>
+
+
+        <!-- Camera -->
+        <a-entity id="rig" movement-controls position="0 0 0" rotation="0 0 0">
+
+          <a-entity camera="near: 0.005; fov:75;" id="camera" position="0 1 0" look-controls="pointerLockEnabled: false"></a-entity>
+
+          <a-entity id="leftHand" laser-controls="hand: left" windows-motion-controls="hand: left" oculus-touch-controls="hand: left" vive-controls="hand: left" raycaster="objects: .clickable; far: 100" ></a-entity>
+          <a-entity id="rightHand" laser-controls="hand: right" windows-motion-controls="hand: right" oculus-touch-controls="hand: right" vive-controls="hand: right" raycaster="objects: .clickable; far: 100"></a-entity>
+
+        </a-entity>
+
+
+        <a-entity id="container" position="0 0 0">
+            <a-entity id="scene_container" rotation="0 0 0">
+
+                <!-- menu elements -->
+                <a-sphere id="sphere_btn" class="clickable left menu" position="-2 0.5 -5" radius="0.5" color="#ff0000" shadow="cast: true"></a-sphere>
+                <a-box id="box_btn" class="clickable menu" position="0 0.5 -5" color="#00ff00" shadow="cast: true"></a-box>
+                <a-torus id="torus_btn" class="clickable menu" position="2 0.75 -5" radius="0.5" radius-tubular="0.1" color="#0000ff" shadow="cast: true"></a-torus>
+                
+                <!-- floor -->
+                <a-plane rotation="-90 0 0" scale="20 20 1" shadow="receive: true"></a-plane>
+
+                <!-- popup -->
+                <a-entity id="popup" position="0 1 -1.5" visible="false">
+                  <a-circle id="close_btn" position="0.5 0.25 0.01" scale="0.1 0.1 0.1" color="#000000" material="shader:flat" class="clickable">
+                    <a-text position="0 0.166 0.01" value="x" text="anchor: center;align: center; wrapCount: 5" material="shader:flat"></a-text>
+                  </a-circle>
+                  <a-plane width="1" height="0.5" material="shader:flat">
+                    <a-text id="popup_text" position="0 0 0.01" value="x" text="color: #000000; anchor: center;align: center; wrapCount: 50">
+                    </a-text>
+                  </a-plane>
+                </a-entity>
+
+            </a-entity>
+        </a-entity>
+
+        <!-- lights -->
+        <a-entity light="type: ambient; color: #fff; intensity: 1" ></a-entity>
+        <a-entity light="intensity: 5; type: point; castShadow: true" rotation="" position="2 3 2"></a-entity>
+        <a-entity light="intensity: 3; type: point; castShadow: true" rotation="" position="-4 3 1.5"></a-entity>
+        <a-entity light="intensity: 0.5; type: point; castShadow: false" rotation="" position="1 3 -2"></a-entity>
+
+
+
+      </a-entity>
+
+
+
+
+    </a-scene>
+
+
+
+</body>
+
+</html>
