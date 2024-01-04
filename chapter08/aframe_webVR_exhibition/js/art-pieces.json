@@ -1,0 +1,170 @@
+{
+    "mona":{
+        "name":"Mona Lisa",
+        "author": "Leonardo da Vinci",
+        "date": "1503-1506",
+        "type":"paint",
+        "dimensions": [0.77,0.53],
+        "customScale": 1.5,
+        "position": [3.65,1.5,5],
+        "rotation": [0,0,0],
+        "src": "./assets/images/art-pieces/mona.jpg"
+    },
+    "starry-night":{
+        "name":"Starry Night",
+        "author": "Vincent Van Gogh",
+        "date": "1889",
+        "type":"paint",
+        "dimensions": [0.73,0.92],
+        "customScale": 1.5,
+        "position": [1.5,1.5,5],
+        "rotation": [0,0,0],
+        "src": "./assets/images/art-pieces/starry-night.jpg"
+    },
+    "dali":{
+        "name":"",
+        "author": "",
+        "date": "1893",
+        "type":"paint",
+        "dimensions": [0.779,1.024],
+        "customScale": 1.5,
+        "position": [-1.454,1.5,5],
+        "rotation": [0,0,0],
+        "src": "./assets/images/art-pieces/dali.jpg"
+    },
+    "degas":{
+        "name":"",
+        "author": "",
+        "date": "1893",
+        "type":"paint",
+        "dimensions": [1.024,0.653],
+        "customScale": 1.5,
+        "position": [-3.417,1.5,5],
+        "rotation": [0,0,0],
+        "src": "./assets/images/art-pieces/degas.jpg"
+    },
+    "skrik":{
+        "name":"Skrik",
+        "author": "Edvard Munch",
+        "date": "1893",
+        "type":"paint",
+        "dimensions": [0.91,0.735],
+        "customScale": 1.5,
+        "position": [-5,1.5,3.4],
+        "rotation": [0,90,0],
+        "src": "./assets/images/art-pieces/skrik.jpg"
+    },
+    "escher":{
+        "name":"",
+        "author": "",
+        "date": "1893",
+        "type":"paint",
+        "dimensions": [1.024,0.688],
+        "customScale": 1.5,
+        "position": [-5,1.5,1.496],
+        "rotation": [0,90,0],
+        "src": "./assets/images/art-pieces/escher.jpg"
+    },
+    "frida":{
+        "name":"",
+        "author": "",
+        "date": "1893",
+        "type":"paint",
+        "dimensions": [1.024,0.801],
+        "customScale": 1.5,
+        "position": [-5,1.5,-1.481],
+        "rotation": [0,90,0],
+        "src": "./assets/images/art-pieces/frida.jpg"
+    },
+    "tarsila":{
+        "name":"",
+        "author": "",
+        "date": "1893",
+        "type":"paint",
+        "dimensions": [1.024,0.768],
+        "customScale": 1.5,
+        "position": [-5,1.5,-3.459],
+        "rotation": [0,90,0],
+        "src": "./assets/images/art-pieces/tarsila.jpg"
+    },
+    "katsushika":{
+        "name":"",
+        "author": "",
+        "date": "1893",
+        "type":"paint",
+        "dimensions": [0.688,1.024],
+        "customScale": 1.5,
+        "position": [-5.000, 4.780,-1.418],
+        "rotation": [0,90,0],
+        "src": "./assets/images/art-pieces/katsushika.jpg"
+    },
+    "magritte":{
+        "name":"",
+        "author": "",
+        "date": "1893",
+        "type":"paint",
+        "dimensions": [0.819,1.024],
+        "customScale": 1.5,
+        "position": [-5.000, 4.780,-3.480],
+        "rotation": [0,90,0],
+        "src": "./assets/images/art-pieces/magritte.jpg"
+    },
+    "hopper":{
+        "name":"",
+        "author": "",
+        "date": "1893",
+        "type":"paint",
+        "dimensions": [0.559,1.024],
+        "customScale": 1.5,
+        "position": [-5.000, 4.780,1.468],
+        "rotation": [0,90,0],
+        "src": "./assets/images/art-pieces/hopper.jpg"
+    },
+    "ayatul":{
+        "name":"The Throne Verse (Ayat Al-Kursi)",
+        "author": "Anonymous",
+        "date": "1500 - 1599",
+        "type":"paint",
+        "dimensions": [0.559,1.024],
+        "customScale": 1.5,
+        "position": [-5.000, 4.780,1.468],
+        "rotation": [0,90,0],
+        "src": "./assets/images/art-pieces/ayatul.jpg"
+    },
+    "nataraja":{
+        "name":"Nataraja, Shiva as the Lord of Dance",
+        "author": "Tamil Nadu",
+        "date": "Chola Period (900-1200s)",
+        "type":"sculpture",
+        "dimensions": [0.559,1.024],
+        "customScale": 1.5,
+        "position": [-5.000, 4.780,1.468],
+        "rotation": [0,90,0],
+        "src": "./assets/models/art-pieces/1930.331_nataraja_shiva_as_the_lord_of_dance.glb"
+    },
+    "nataraja":{
+        "name":"Nataraja, Shiva as the Lord of Dance",
+        "author": "Tamil Nadu",
+        "date": "Chola Period (900-1200s)",
+        "type":"sculpture",
+        "dimensions": [0.559,1.024],
+        "customScale": 1.5,
+        "position": [-5.000, 4.780,1.468],
+        "rotation": [0,90,0],
+        "src": "./assets/models/art-pieces/african_masks.glb"
+    },
+    "thinker":{
+        "name":"thinker",
+        "author": "",
+        "date": "Chola Period (900-1200s)",
+        "type":"sculpture",
+        "dimensions": [0.559,1.024],
+        "customScale": 1.5,
+        "position": [-5.000, 4.780,1.468],
+        "rotation": [0,90,0],
+        "src": "./assets/models/art-pieces/the_thinker_by_auguste_rodin.glb"
+    }
+
+
+
+}
