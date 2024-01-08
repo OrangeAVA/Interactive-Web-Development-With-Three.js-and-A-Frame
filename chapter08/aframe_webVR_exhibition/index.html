@@ -8,15 +8,10 @@
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
     <link rel="stylesheet" type="text/css" href="styles.css" media="all" />
   
- 
     <script src="https://unpkg.com/aframe@1.4.2/dist/aframe-master.js"></script>
     <script src="https://unpkg.com/aframe-extras@7.1.0/dist/aframe-extras.min.js"></script>
-    <script src="https://unpkg.com/three@0.147.0/examples/js/loaders/RGBELoader.js"></script>
-
 
     <script src="./js/components.js"></script>
-    <script type="module" src="js/main.js"></script>
-
 
   </head>
 
@@ -27,9 +22,8 @@
         renderer="antialias: true; colorManagement: true; physicallyCorrectLights: true;" 
         xr-mode-ui="enabled: true" shadow="type: pcf" light="defaultLightsEnabled: false"
         loading-screen="enabled: true;"
-        scene-environment="hdrImage:./assets/images/pisa.hdr; hdrExposure: 1;"
         gltf-model="dracoDecoderPath: https://ar-libs.blippar.com/components/draco/1.4.1/;"
-        raycaster="objects: .clickable"
+        raycaster="objects: .clickable; far: 5"
         cursor="fuse: false; rayOrigin: mouse"
       >
 
@@ -45,97 +39,100 @@
         <!-- Camera -->
         <a-entity id="rig" movement-controls="constrainToNavMesh: true" position="14 0 0" rotation="0 -90 0">
 
-          <a-entity camera="near: 0.005; fov:75;" id="camera" position="0 1 0" look-controls="pointerLockEnabled: false"></a-entity>
+          <a-entity camera="near: 0.005; fov:75;" id="camera" position="0 1.4 0" look-controls="pointerLockEnabled: false">
 
-          <a-entity id="leftHand" laser-controls="hand: left" windows-motion-controls="hand: left" oculus-touch-controls="hand: left" vive-controls="hand: left" raycaster="objects: .clickable; far: 100" ></a-entity>
-          <a-entity id="rightHand" laser-controls="hand: right" windows-motion-controls="hand: right" oculus-touch-controls="hand: right" vive-controls="hand: right" raycaster="objects: .clickable; far: 100"></a-entity>
+            <!-- popup -->
+            <a-entity id="popup" position="0 0 -0.5" scale="0 0 0" visible="false"
+              animation__scale_up="property: scale; to: 0.3 0.3 0.3; dur: 1500; easing: easeOutElastic; startEvents: scaleUp"
+              animation__scale_down="property: scale; to: 0 0 0; dur: 500; easing: easeInBack; startEvents: scaleDown"
+            >
+              <a-circle id="close_btn" position="0.5 0.25 0.01" scale="0.05 0.05 0.05" color="#000000" material="shader:flat" class="clickable">
+                <a-text position="0 0.166 0.01" value="x" text="anchor: center;align: center; wrapCount: 5" material="shader:flat"></a-text>
+              </a-circle>
+              <a-plane width="1" height="0.5" material="shader:flat">
+                <a-text id="popup_name" position="0 0.13 0.01" value="x" text="font: roboto; anchor: center; width: 0.85; color: #000000; align: center; wrapCount: 22.25"></a-text>
+                <a-text id="popup_author" position="0 -0.009 0.01" value="x" text="font: roboto; anchor: center; width: 0.85; color: #000000; align: center; wrapCount: 22.25"></a-text>
+                <a-text id="popup_date" position="0 -0.150 0.01" value="x" text="font: roboto; anchor: center; width: 0.85; color: #000000; align: center; wrapCount: 22.25"></a-text>
+              </a-plane>
+            </a-entity>
+          </a-entity>
+
+          <a-entity id="leftHand" laser-controls="hand: left" windows-motion-controls="hand: left" oculus-touch-controls="hand: left" vive-controls="hand: left" raycaster="objects: .clickable;" ></a-entity>
+          <a-entity id="rightHand" laser-controls="hand: right" windows-motion-controls="hand: right" oculus-touch-controls="hand: right" vive-controls="hand: right" raycaster="objects: .clickable;"></a-entity>
 
         </a-entity>
 
 
         <a-entity id="navmesh" nav-mesh position="0 0 0" scale="1 1 1" gltf-model="#navmesh_glb" visible="false"></a-entity>
 
-        <a-entity id="container" position="0 0 0">
-            <a-entity id="scene_container" rotation="0 0 0">
+        <a-entity id="container">
+          <a-entity id="building_container">
 
-                <!-- popup -->
-                <a-entity id="popup" position="0 1 -1.5" visible="false">
-                  <a-circle id="close_btn" position="0.5 0.25 0.01" scale="0.1 0.1 0.1" color="#000000" material="shader:flat" class="clickable">
-                    <a-text position="0 0.166 0.01" value="x" text="anchor: center;align: center; wrapCount: 5" material="shader:flat"></a-text>
-                  </a-circle>
-                  <a-plane width="1" height="0.5" material="shader:flat">
-                    <a-text id="popup_text" position="0 0 0.01" value="x" text="color: #000000; anchor: center;align: center; wrapCount: 50">
-                    </a-text>
-                  </a-plane>
-                </a-entity>
-
-                <!-- art pieces, to be populated with the json file -->
-                <a-entity art-pieces="path: js/art-pieces.json"></a-entity>
-
-                <a-entity
+              <a-entity
                 id="spawn_room"
                 gltf-model="#spawn_room"
                 position= "15 0 0" 
-                mesh-basic-material="map: assets/models/spawn_room.jpg"
-                >
-                  <a-entity
+                art-room-material="map: ./assets/images/spawn_room.jpg"
+                shadow="cast: true; receive: true"
+              >
+                <a-entity
                   id="btn_first_floor"
                   class="clickable"
                   gltf-model="#spawn_room_btn"
                   position= "2.18 1.02 -1.09" 
-                  mesh-basic-material="map: assets/models/spawn_room.jpg"
-                  ></a-entity>
-
-                  <a-entity
+                  art-room-material="map: ./assets/images/spawn_room.jpg"
+                  shadow="cast: true; receive: true"
+                ></a-entity>
+                <a-entity
                   id="btn_second_floor"
                   class="clickable"
                   gltf-model="#spawn_room_btn"
                   position= "2.18 1.02 1.11" 
-                  mesh-basic-material="map: assets/models/spawn_room.jpg"
-                  ></a-entity>
+                  art-room-material="map: ./assets/images/spawn_room.jpg"
+                  shadow="cast: true; receive: true"
+                ></a-entity>
 
-                  <a-entity id="intro_title" text__intro_title="side: double; value: Welcome to our Virtual Exhibition!; color: #000000; width: 7.44; wrapCount: 83.81; zOffset: 0; align: center" scale="" rotation="0 -90 0" position="2.75 1.735 0"></a-entity>
+                <a-entity id="intro_title" text__intro_title="side: front; value: Welcome to our Virtual Exhibition!; color: #000000; width: 7.44; wrapCount: 83.81; zOffset: 0; align: center" scale="" rotation="0 -90 0" position="2.75 1.735 0" shadow="cast: false; receive: false"></a-entity>
+                <a-entity id="intro_copy" text__intro_copy="side: front; value: Tap on the left button to go to the first Exhibition Floor, and on the right button to go to the second floor.; color: #000000; width: 2.39; wrapCount: 29.67; zOffset: 0; align: center" scale="" rotation="0 -90 0" position="2.75 1.29 0" shadow="cast:false; receive:false"></a-entity>
+              </a-entity>
 
-                  <a-entity id="intro_copy" text__intro_copy="side: double; value: Tap on the left button to go to the first Exhibition Floor, and on the right button to go to the second floor.; color: #000000; width: 2.39; wrapCount: 29.67; zOffset: 0; align: center" scale="" rotation="0 -90 0" position="2.75 1.29 0"></a-entity>
-
-                </a-entity>
-
-
-                <a-entity
+              <a-entity
                 id="art_room_1f"
                 gltf-model="#art_room_1f"
                 position= "0 0 0" 
-                mesh-basic-material="map: assets/models/art_room_1f_baked.jpg"
-                >
-                </a-entity>
+                art-room-material="map: ./assets/images/art_room_1f_baked.jpg"
+                shadow="cast: true; receive: true"
+              >
+              </a-entity>
 
-                <a-entity
+              <a-entity
                 id="art_room_2f"
                 gltf-model="#art_room_2f"
                 position= "0 0 0" 
-                mesh-basic-material="map: assets/models/art_room_2f_baked.jpg"
-                >
-                </a-entity>
-            </a-entity>
-        </a-entity>
+                art-room-material="map: ./assets/images/art_room_2f_baked.jpg"
+                shadow="cast: true; receive: true"
+              >
+              </a-entity>
 
-        <!-- lights -->
-        <a-entity light="type: ambient; color: #fff; intensity: 1" ></a-entity>
-        
-        <a-entity light="intensity: 5; type: point; castShadow: true" rotation="" position="2 3 2"></a-entity>
-        <a-entity light="intensity: 3; type: point; castShadow: true" rotation="" position="-4 3 1.5"></a-entity>
-        <a-entity light="intensity: 0.5; type: point; castShadow: false" rotation="" position="1 3 -2"></a-entity>
+              <!-- art pieces, to be populated from the json file -->
+              <a-entity id="art-pieces-container" art-pieces="path: js/art-pieces.json"></a-entity>
 
+          </a-entity>
 
+          <!-- lights -->
+          <a-entity light="type: ambient; color: #fff; intensity: 3" ></a-entity>
+
+          <a-entity id="light_spawn_room" light="type: point; castShadow: true;  intensity: 2" rotation="" position="15 2.9 0"></a-entity>
+          
+          <a-entity id="light_1st_floor" light="type: point; castShadow: true; intensity: 2" position="0.05 2.42 -0.09"></a-entity>
+
+          <a-entity id="light_2nd_floor" position="0 6.4 0" light="type: point; castShadow: true; intensity: 2" position="0.05 2.42 -0.096"></a-entity>
 
       </a-entity>
 
-
-
-
     </a-scene>
 
-
+    <script src="./js/main.js"></script>
 
 </body>
 

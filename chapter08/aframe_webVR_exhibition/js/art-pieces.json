@@ -5,7 +5,7 @@
         "date": "1503-1506",
         "type":"paint",
         "dimensions": [0.77,0.53],
-        "customScale": 1.5,
+        "customScale": 2,
         "position": [3.65,1.5,5],
         "rotation": [0,0,0],
         "src": "./assets/images/art-pieces/mona.jpg"
@@ -22,24 +22,24 @@
         "src": "./assets/images/art-pieces/starry-night.jpg"
     },
     "dali":{
-        "name":"",
-        "author": "",
-        "date": "1893",
+        "name":"La Persistencia de la Memoria",
+        "author": "Salvador Dali",
+        "date": "1931",
         "type":"paint",
-        "dimensions": [0.779,1.024],
-        "customScale": 1.5,
+        "dimensions": [0.24,0.33],
+        "customScale": 4,
         "position": [-1.454,1.5,5],
         "rotation": [0,0,0],
         "src": "./assets/images/art-pieces/dali.jpg"
     },
     "degas":{
-        "name":"",
-        "author": "",
-        "date": "1893",
+        "name":"Dancer",
+        "author": "Edgar Degas",
+        "date": "1880",
         "type":"paint",
-        "dimensions": [1.024,0.653],
-        "customScale": 1.5,
-        "position": [-3.417,1.5,5],
+        "dimensions": [0.489,0.318],
+        "customScale": 3,
+        "position": [-3.25,1.5,5],
         "rotation": [0,0,0],
         "src": "./assets/images/art-pieces/degas.jpg"
     },
@@ -55,116 +55,164 @@
         "src": "./assets/images/art-pieces/skrik.jpg"
     },
     "escher":{
-        "name":"",
-        "author": "",
-        "date": "1893",
+        "name":"Hand with Reflecting Sphere",
+        "author": "M. C. Escher",
+        "date": "1935",
         "type":"paint",
-        "dimensions": [1.024,0.688],
-        "customScale": 1.5,
+        "dimensions": [0.318,0.213],
+        "customScale": 4.5,
         "position": [-5,1.5,1.496],
         "rotation": [0,90,0],
         "src": "./assets/images/art-pieces/escher.jpg"
     },
     "frida":{
-        "name":"",
-        "author": "",
-        "date": "1893",
+        "name":"Autorretrato con Bonito",
+        "author": "Frida Kahlo",
+        "date": "1941",
         "type":"paint",
-        "dimensions": [1.024,0.801],
-        "customScale": 1.5,
-        "position": [-5,1.5,-1.481],
+        "dimensions": [0.55,0.434],
+        "customScale": 3,
+        "position": [-5,1.5,-1.5],
         "rotation": [0,90,0],
         "src": "./assets/images/art-pieces/frida.jpg"
     },
     "tarsila":{
-        "name":"",
-        "author": "",
-        "date": "1893",
+        "name":"Abaporu",
+        "author": "Tarsila do Amaral",
+        "date": "1928",
         "type":"paint",
-        "dimensions": [1.024,0.768],
-        "customScale": 1.5,
-        "position": [-5,1.5,-3.459],
+        "dimensions": [0.85,0.72],
+        "customScale": 2,
+        "position": [-5,1.5,-3.65],
         "rotation": [0,90,0],
         "src": "./assets/images/art-pieces/tarsila.jpg"
     },
     "katsushika":{
-        "name":"",
-        "author": "",
-        "date": "1893",
+        "name":"Under the Wave Off Kanagawa",
+        "author": "Katsushika Hokusai",
+        "date": "1830-1833",
         "type":"paint",
-        "dimensions": [0.688,1.024],
-        "customScale": 1.5,
-        "position": [-5.000, 4.780,-1.418],
+        "dimensions": [0.25,0.37],
+        "customScale": 4.5,
+        "position": [-5.000, 4.780,-1.50],
         "rotation": [0,90,0],
         "src": "./assets/images/art-pieces/katsushika.jpg"
     },
     "magritte":{
-        "name":"",
-        "author": "",
-        "date": "1893",
+        "name":"Les Valeus Personnelles",
+        "author": "Rene Magritte",
+        "date": "1952",
         "type":"paint",
-        "dimensions": [0.819,1.024],
+        "dimensions": [0.8,1.0],
         "customScale": 1.5,
-        "position": [-5.000, 4.780,-3.480],
+        "position": [-5.000, 4.780,-3.65],
         "rotation": [0,90,0],
         "src": "./assets/images/art-pieces/magritte.jpg"
-    },
-    "hopper":{
-        "name":"",
-        "author": "",
-        "date": "1893",
-        "type":"paint",
-        "dimensions": [0.559,1.024],
-        "customScale": 1.5,
-        "position": [-5.000, 4.780,1.468],
-        "rotation": [0,90,0],
-        "src": "./assets/images/art-pieces/hopper.jpg"
     },
     "ayatul":{
         "name":"The Throne Verse (Ayat Al-Kursi)",
         "author": "Anonymous",
         "date": "1500 - 1599",
         "type":"paint",
-        "dimensions": [0.559,1.024],
-        "customScale": 1.5,
+        "dimensions": [0.225,0.315],
+        "customScale": 4.5,
         "position": [-5.000, 4.780,1.468],
         "rotation": [0,90,0],
         "src": "./assets/images/art-pieces/ayatul.jpg"
     },
+    "hopper":{
+        "name":"Nighthawks",
+        "author": "Edward Hopper",
+        "date": "1942",
+        "type":"paint",
+        "dimensions": [0.841,1.524],
+        "customScale": 1,
+        "position": [-5,4.780,3.4],
+        "rotation": [0,90,0],
+        "src": "./assets/images/art-pieces/hopper.jpg"
+    },
+    "miro":{
+        "name":"Carnaval de Arlequin",
+        "author": "Joan Miro",
+        "date": "1924-1925",
+        "type":"paint",
+        "dimensions": [0.66,0.90],
+        "customScale": 1.75,
+        "position": [-3.25,4.780,5],
+        "rotation": [0,0,0],
+
+        "src": "./assets/images/art-pieces/miro.jpg"
+    },
+    "vermeer":{
+        "name":"Girl with a Pearl Earring",
+        "author": "Johannes Vermeer",
+        "date": "1665",
+        "type":"paint",
+        "dimensions": [0.445,0.39],
+        "customScale": 3,
+        "position": [-1.454,4.780,5],
+        "rotation": [0,0,0],
+
+        "src": "./assets/images/art-pieces/vermeer.jpg"
+    },
+
+    "bosch":{
+        "name":"Tondal's vision",
+        "author": "Hieronymus Bosch",
+        "date": "1550",
+        "type":"paint",
+        "dimensions": [0.54,0.72],
+        "customScale": 2.2,
+        "position": [1.5,4.780,5],
+        "rotation": [0,0,0],
+        "src": "./assets/images/art-pieces/bosch.jpg"
+    },
+
+    "warhol":{
+        "name":"Untitled from Marilyn Monroe",
+        "author": "Andy Warhol",
+        "date": "1967",
+        "type":"paint",
+        "dimensions": [0.915,0.915],
+        "customScale": 1.5,
+        "position": [3.65,4.780,5],
+        "rotation": [0,0,0],
+        "src": "./assets/images/art-pieces/warhol.jpg"
+    },
+
     "nataraja":{
         "name":"Nataraja, Shiva as the Lord of Dance",
         "author": "Tamil Nadu",
-        "date": "Chola Period (900-1200s)",
+        "date": "900-1200",
         "type":"sculpture",
-        "dimensions": [0.559,1.024],
-        "customScale": 1.5,
-        "position": [-5.000, 4.780,1.468],
-        "rotation": [0,90,0],
-        "src": "./assets/models/art-pieces/1930.331_nataraja_shiva_as_the_lord_of_dance.glb"
+        "dimensions": [],
+        "customScale": 0.75,
+        "position": [1.15, 1.15,-1.15],
+        "rotation": [0,0,0],
+        "src": "./assets/models/art-pieces/natajara.glb"
     },
-    "nataraja":{
-        "name":"Nataraja, Shiva as the Lord of Dance",
-        "author": "Tamil Nadu",
-        "date": "Chola Period (900-1200s)",
+
+    "masks":{
+        "name":"African Masks",
+        "author": "Unknown",
+        "date": "3000-2500 BCE",
         "type":"sculpture",
-        "dimensions": [0.559,1.024],
-        "customScale": 1.5,
-        "position": [-5.000, 4.780,1.468],
+        "dimensions": [],
+        "customScale": 0.075,
+        "position": [-1.35,0.73,0],
         "rotation": [0,90,0],
-        "src": "./assets/models/art-pieces/african_masks.glb"
+        "src": "./assets/models/art-pieces/masks.glb"
     },
+
     "thinker":{
-        "name":"thinker",
-        "author": "",
-        "date": "Chola Period (900-1200s)",
+        "name":"The Thinker",
+        "author": "Auguste Rodin",
+        "date": "1880",
         "type":"sculpture",
-        "dimensions": [0.559,1.024],
-        "customScale": 1.5,
-        "position": [-5.000, 4.780,1.468],
-        "rotation": [0,90,0],
-        "src": "./assets/models/art-pieces/the_thinker_by_auguste_rodin.glb"
+        "dimensions": [],
+        "customScale": 1,
+        "position": [-0.080,3.300,1.377],
+        "rotation": [0,-45,0],
+        "src": "./assets/models/art-pieces/thinker.glb"
     }
-
-
-
 }

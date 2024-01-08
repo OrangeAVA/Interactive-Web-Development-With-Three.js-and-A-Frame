@@ -1,108 +1,100 @@
-AFRAME.registerComponent('scene-environment', {
-
-    schema: {
-        enabled: {default: true},
-        hdrImage: {default: ''},
-        hdrExposure: {default: 1}
-    },
-
-    init: function() {
-
-      let enabled = this.data.enabled;
-      let hdrImage = this.data.hdrImage;
-      let hdrExposure = this.data.hdrExposure;
-      
-      if (!enabled) return;
-
-      const sceneEl = this.el;
-      const scene = sceneEl.object3D;
-      const renderer = sceneEl.renderer;
-
-      new THREE.RGBELoader()
-        .load( hdrImage, function ( texture ) {
-
-          texture.mapping = THREE.EquirectangularReflectionMapping;
-          
-          scene.background = texture;
-          scene.environment = texture;
-
-          renderer.toneMapping = THREE.LinearToneMapping;
-          renderer.toneMappingExposure = hdrExposure;
-
-          renderer.outputEncoding = THREE.sRGBEncoding;
-
-      } );
-    },
-    update: function() {
-    },
-    tick: function() {
-    }
-});
-
-AFRAME.registerComponent('art-pieces', {
-
-  schema: {
-      path: {default: ""},
-      customScale: {default: 2}
-  },
-
-  init: function() {
-
-    //console.log(this.data.path)
-    const el = this.el
-
-    fetch(this.data.path)
-      .then((response)=> response.json())
-      .then((json) => 
-      {
-        //console.log(json)
-        //console.log(el)
-       
-        Object.keys(json).map((pieceKey, index) =>{
-          
-          const curPiece = json[pieceKey] 
-          
-          el.innerHTML += `
-          <a-box 
-          material="src: ${curPiece.src}"
-          scale=" ${curPiece.dimensions[1] * curPiece.customScale} ${curPiece.dimensions[0] * curPiece.customScale} 0.08"
-          position="${curPiece.position[0]} ${curPiece.position[1]} ${curPiece.position[2]}"
-          rotation="${curPiece.rotation[0]} ${curPiece.rotation[1]} ${curPiece.rotation[2]}"
-          >
-          </a-box>
-          `
-        })
-      })
-  },
-  update: function() {
-  },
-  tick: function() {
-  }
-});
-
-AFRAME.registerComponent('mesh-basic-material', {
+AFRAME.registerComponent('art-room-material', {
   
   schema: {
     map: {default: ""},
 },
   
-  init: function(){
+  init: function() {
       let el = this.el;
-      let mapSrc = this.data.map
-      let texture = new THREE.TextureLoader().load(mapSrc)
+      let mapSrc = this.data.map;
+      let texture = new THREE.TextureLoader().load(mapSrc);
       
       texture.flipY = false;
-      texture.colorSpace = THREE.SRGBColorSpace
+      texture.colorSpace = THREE.SRGBColorSpace;
       
       el.addEventListener("model-loaded", e =>{
-          el.object3D.traverse(function(node){
-              if (node.isMesh){                           
-                  node.material = new THREE.MeshBasicMaterial({
+          el.object3D.traverse(function(child){
+              if (child.isMesh){                           
+                  child.material = new THREE.MeshStandardMaterial({
                     map: texture
                   })
-                  node.material.needsUpdate = true;
+                  child.material.needsUpdate = true;
               }
           });
       });
   }
 }); 
+
+
+AFRAME.registerComponent('art-pieces', {
+
+  schema: {
+      path: {default: ""}
+  },
+
+  init: function() {
+
+    const el = this.el;
+
+    
+    fetch(this.data.path)
+      .then((response)=> response.json())
+      .then((json) => 
+      {
+       
+        Object.keys(json).map((artPieceKey, index) =>{
+          
+          const currentArtPiece = json[artPieceKey];
+          
+          // load paints
+          if (currentArtPiece.type === "paint") {
+            el.innerHTML += `
+              <a-box 
+                material="src: ${currentArtPiece.src}"
+                scale=" ${currentArtPiece.dimensions[1] * currentArtPiece.customScale} ${currentArtPiece.dimensions[0] * currentArtPiece.customScale} 0.08"
+                position="${currentArtPiece.position[0]} ${currentArtPiece.position[1]} ${currentArtPiece.position[2]}"
+                rotation="${currentArtPiece.rotation[0]} ${currentArtPiece.rotation[1]} ${currentArtPiece.rotation[2]}"
+                data-index="${index}"
+                class="clickable artpiece"
+                shadow="cast: true; receive: true"
+              >
+              </a-box>
+            `;
+          }
+
+          //load models
+          else
+          {
+            el.innerHTML += `
+              <a-entity
+                  gltf-model="${currentArtPiece.src}"
+                  rotation="${currentArtPiece.rotation[0]} ${currentArtPiece.rotation[1]} ${currentArtPiece.rotation[2]}"
+                  position= "${currentArtPiece.position[0]} ${currentArtPiece.position[1]} ${currentArtPiece.position[2]}" 
+                  scale="${currentArtPiece.customScale} ${currentArtPiece.customScale} ${currentArtPiece.customScale}"
+                  data-index="${index}"
+                  class="clickable artpiece"
+                  shadow="cast: true; receive: true"
+              >
+              </a-entity>
+            `;
+          }
+        })
+
+
+        //add click event listener to the art pieces
+        const artPieces = document.querySelectorAll('.clickable.artpiece');
+        
+        artPieces.forEach(function(element) {
+          const index = element.dataset.index;
+
+          element.addEventListener('click', function() {
+            const artPieceData = Object.entries(json)[index][1];
+            openPopup(artPieceData);
+          })
+        })
+      })
+  }
+});
+
+
+
