@@ -271,8 +271,7 @@ function shoot() {
 
   const matPhysicsBullet = new CANNON.Material();
   const matPhysicsBullet_ground = new CANNON.ContactMaterial(
-    floorPhysicsMaterial,
-    matPhysicsBullet,
+    floorPhysicsMaterial, matPhysicsBullet,
     {
       friction: 0.0,
       restitution: 0.5,

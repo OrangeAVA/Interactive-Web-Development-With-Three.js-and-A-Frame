@@ -121,8 +121,7 @@ async function start() {
         child.castShadow = true;
       });
 
-      const candleHolderGlass =
-        gltf.scene.getObjectByName("CandleHolder-glass");
+      const candleHolderGlass = gltf.scene.getObjectByName("CandleHolder-glass");
       if (!candleHolderGlass || !candleHolderGlass.isMesh) return;
       const chromeMaterial = new THREE.MeshStandardMaterial({
         color: 0xffffff,
