@@ -6,7 +6,7 @@ import { DRACOLoader } from "https://unpkg.com/three@0.153.0/examples/jsm/loader
 import { RGBELoader } from "https://unpkg.com/three@0.153.0/examples/jsm/loaders/RGBELoader.js";
 
 
-let renderer, scene, container, camera, controls, stats1, stats2, model, selectedColor = 0, selectedModel = -1, selectedStamp = 0;
+let renderer, scene, container, camera, controls, stats1, stats2, modelBase, modelDesign, selectedColor = 0, selectedModel = -1, selectedStamp = 0;
 
 const loader = new GLTFLoader();
 const dracoLoader = new DRACOLoader();
@@ -110,9 +110,9 @@ async function start() {
 
   //Update shirt color on button press
   function updateShirtColor(newColor = '', newId = 0){
-    if (!model) return;
+    if (!modelBase) return;
  
-     model.traverse((child)=>{
+     modelBase.traverse((child)=>{
        if (!child.isMesh) return;
  
        child.material.color = new THREE.Color(newColor)
@@ -133,10 +133,15 @@ async function start() {
     //only updates if a new model is selected
     if (newId == selectedModel) return
     
-    if (model)
-      scene.remove(model)
+    if (modelBase)
+      scene.remove(modelBase)
 
-    model = null
+    modelBase = null
+
+    if (modelDesign)
+      scene.remove(modelDesign)
+
+    modelDesign = null
 
     const textureLoader = new THREE.TextureLoader()
     const normal = textureLoader.load(obj.normal)
@@ -148,12 +153,14 @@ async function start() {
     loader.load(
       obj.src,
       function (gltf) {
-        model = gltf.scene
-        scene.add(model);
-        gltf.scene.position.set(0, 0, 0);
-        gltf.scene.scale.set(0.2, 0.2, 0.2);
+
+        modelBase = gltf.scene
+        modelBase.name = 'tshirtBase'
+        scene.add(modelBase);
+        modelBase.position.set(0, 0, 0);
+        modelBase.scale.set(0.2, 0.2, 0.2);
   
-        gltf.scene.traverse(function (child) {
+        modelBase.traverse(function (child) {
           if (!child.isMesh) return;
   
           child.castShadow = true;
@@ -168,7 +175,30 @@ async function start() {
           child.material = childMaterial;
         });
 
-      model.visible = false
+        modelDesign = gltf.scene.clone()
+        globalThis.modelDesign = modelDesign;
+        modelDesign.name = 'tshirtDesign'
+        scene.add(modelDesign);
+        modelDesign.position.set(0, 0, 0);
+        modelDesign.scale.set(0.2, 0.2, 0.2);
+
+        modelDesign.traverse(function (child) {
+          if (!child.isMesh) return;
+  
+          child.castShadow = true;
+  
+          const childMaterial = new THREE.MeshStandardMaterial({
+            color: 0xffffff,
+            normalMap: normal,
+            aoMap: orm,
+            side: THREE.DoubleSide,
+            envMapIntensity: 1
+           });
+          child.material = childMaterial;
+        });
+
+      modelBase.visible = false
+      modelDesign.visible = false
 
       //update selected element on palette
       const shirtPickers = document.querySelectorAll('.shirt-picker')
@@ -182,7 +212,8 @@ async function start() {
       .then(data => {
         updateShirtColor(data.shirtColors[selectedColor], selectedColor)
         updateStamp(data.shirtStamps[selectedStamp], selectedStamp)
-        model.visible = true
+        modelBase.visible = true
+        modelDesign.visible = true
         })
       },
       function (progress) {},
@@ -204,20 +235,18 @@ async function start() {
     map.colorSpace = THREE.SRGBColorSpace
   }
 
-  if (!model) return;
+  if (!modelDesign) return;
 
-   model.traverse((child)=>{
+   modelDesign.traverse((child)=>{
      if (!child.isMesh) return;
       if (map)
       {
         child.material.map = map
-        child.material.alphaMap = alphaMap
         child.material.transparent = true
       }
       else
       {
         child.material.map = null
-        child.material.alphaMap = null
       }
       child.material.needsUpdate = true
    })
