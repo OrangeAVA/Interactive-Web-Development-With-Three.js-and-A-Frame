@@ -1,0 +1,45 @@
+{
+    "shirtColors": ["#eee", "#222", "#120A8F", "#aaa", "#BD0E22", "#f3d500", "#0d214f", "#add8e6", "#ffcbdb", "#c8a2c8"],
+    "shirtDesigns": [
+        {
+            "thumb": "./assets/images/thumbnails/none.svg",
+            "map": "./assets/models/shirt/textures/designs/empty-stamp.png"
+        },
+        {
+            "thumb": "./assets/images/thumbnails/aframe.png",
+            "map": "./assets/models/shirt/textures/designs/aframe-stamp.png"
+        },
+        {
+            "thumb": "./assets/images/thumbnails/coffee.svg",
+            "map": "./assets/models/shirt/textures/designs/coffee-stamp.png"
+        },
+        {
+            "thumb": "./assets/images/thumbnails/css.svg",
+            "map": "./assets/models/shirt/textures/designs/css-stamp.png"
+        },
+        {
+            "thumb": "./assets/images/thumbnails/react.svg",
+            "map": "./assets/models/shirt/textures/designs/react-stamp.png"
+        },
+        {
+            "thumb": "./assets/images/thumbnails/threejs.svg",
+            "map": "./assets/models/shirt/textures/designs/threejs-stamp.png"
+        }
+    ],
+    "shirtTypes": [
+        {
+            "name": "short sleeve", 
+            "src": "./assets/models/shirt/shirt_short.glb", 
+            "normal": "./assets/models/shirt/textures/shirt2_normal.jpg",
+            "orm": "./assets/models/shirt/textures/shirt2_occlusionRoughnessMetallic.jpg",
+            "thumb": "./assets/images/shirt_short_thumb.png"
+        },
+        {
+            "name": "long sleeve", 
+            "src": "./assets/models/shirt/shirt_long.glb", 
+            "normal": "./assets/models/shirt/textures/shirt_normal.jpg",
+            "orm": "./assets/models/shirt/textures/shirt_occlusionRoughnessMetallic.jpg",
+            "thumb": "./assets/images/shirt_long_thumb.png"
+        }
+    ]
+}

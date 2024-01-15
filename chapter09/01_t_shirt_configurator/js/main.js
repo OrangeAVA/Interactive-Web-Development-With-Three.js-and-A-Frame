@@ -1,12 +1,14 @@
 import * as THREE from "three";
 import { OrbitControls } from "https://unpkg.com/three@0.153.0/examples/jsm/controls/OrbitControls.js";
-import Stats from "https://unpkg.com/three@0.153.0/examples/jsm/libs/stats.module";
 import { GLTFLoader } from "https://unpkg.com/three@0.153.0/examples/jsm/loaders/GLTFLoader";
 import { DRACOLoader } from "https://unpkg.com/three@0.153.0/examples/jsm/loaders/DRACOLoader.js";
 import { RGBELoader } from "https://unpkg.com/three@0.153.0/examples/jsm/loaders/RGBELoader.js";
 
 
-let renderer, scene, container, camera, controls, stats1, stats2, modelBase, modelDesign, selectedColor = 0, selectedModel = -1, selectedStamp = 0;
+let renderer, scene, container, camera, controls, modelBase, modelDesign, textureLoader, jsonData;
+let selectedColor = 0;
+let selectedModel = -1;
+let selectedDesign = 0;
 
 const loader = new GLTFLoader();
 const dracoLoader = new DRACOLoader();
@@ -15,20 +17,13 @@ window.addEventListener("load", function () {
   start();
 });
 
+
 async function start() {
 
-  const textureLoader = new THREE.TextureLoader()
+  textureLoader = new THREE.TextureLoader()
   renderer = new THREE.WebGLRenderer({ antialias: true });
   scene = new THREE.Scene();
-  stats1 = new Stats();
-  stats1.showPanel(0); // Panel 0 = fps
-  stats1.domElement.style.cssText = "position:absolute;top:0px;left:0px;";
-  document.body.appendChild(stats1.domElement);
-
-  stats2 = new Stats();
-  stats2.showPanel(2);
-  stats2.domElement.style.cssText = "position:absolute;top:0px;left:80px;";
-  document.body.appendChild(stats2.domElement);
+  scene.background = new THREE.Color( 0xe7e7e7 );
 
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.shadowMap.enabled = true;
@@ -37,21 +32,13 @@ async function start() {
   container = document.querySelector("#threejsContainer");
   container.appendChild(renderer.domElement);
 
-  camera = new THREE.PerspectiveCamera(
-    60,
-    window.innerWidth / window.innerHeight,
-    0.1,
-    1000,
-  );
+  camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 0.1, 1000 );
   camera.position.set(0, 2, 3);
 
   const backgroundTexture = new RGBELoader().load(
     "./assets/images/pisa.hdr",
     function (texture) {
       texture.mapping = THREE.EquirectangularReflectionMapping;
-      scene.background = texture;
-      scene.backgroundBlurriness = 0.5
-      //scene.background = new THREE.Color(0xffffff);
       scene.environment = texture;
     },
   );
@@ -62,101 +49,102 @@ async function start() {
   controls.target.set(0, 0.5, 0)
 
   const light01 = new THREE.PointLight(0xffffff, 1, 500, 50);
-  light01.position.set(4, 5, 5);
-  light01.castShadow = true;
-  light01.shadow.mapSize.width = light01.shadow.mapSize.height = 1024;
-  light01.shadow.radius = 5;
+  light01.position.set(4, 5, 7);
   scene.add(light01);
 
   const light02 = new THREE.PointLight(0xffffff, 1, 500, 50);
-  light02.position.set(-4, 3, 5);
-  light02.castShadow = true;
-  light02.shadow.mapSize.width = light02.shadow.mapSize.height = 1024;
-  light02.shadow.radius = 5;
+  light02.position.set(-4, 3, 8);
   scene.add(light02);
 
-  const planeGeometry = new THREE.PlaneGeometry(5, 5);
-  const planeMaterial = new THREE.MeshStandardMaterial({ color: 0xffffff });
-  const plane = new THREE.Mesh(planeGeometry, planeMaterial);
-  plane.position.set(0, -0.5, 0);
-  plane.rotation.set(-Math.PI / 2, 0, 0);
-  plane.receiveShadow = true;
-  scene.add(plane);
+  const light03 = new THREE.PointLight(0xffffff, 1, 500, 50);
+  light03.position.set(-2, 4, -8);
+  scene.add(light03);
 
-  dracoLoader.setDecoderPath(
-    "https://www.gstatic.com/draco/versioned/decoders/1.5.6/",
-  );
+  dracoLoader.setDecoderPath( "https://www.gstatic.com/draco/versioned/decoders/1.5.6/" );
   loader.setDRACOLoader(dracoLoader);
 
-  function animate() {
-    stats1.update();
-    stats2.update();
 
+  // load main json file with all the app parameters and data
+  fetch("./js/params.json")
+    .then(res => res.json())
+    .then(data => {
+        jsonData = data;
+
+        // once the json is fully loaded, let's create the UI and initialize the t-shirt
+        createPalletes();
+        initializeShirt();
+        animate();
+
+  });
+
+
+
+  function animate() {
     controls.update();
 
     renderer.render(scene, camera);
     requestAnimationFrame(animate);
   }
 
-  function onWindowResize() {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
 
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.render(scene, camera);
+  //Update t-shirt color on button press
+  function updateShirtColor(newColor = '', newId = 0) {
+    if (!modelBase) return;
+
+    modelBase.traverse((child)=>{
+       if (!child.isMesh) return;
+       child.material.color = new THREE.Color(newColor);
+    })
+
+    //update selected element on palette
+    const colorPickers = document.querySelectorAll('.color-picker');
+
+    if (selectedColor != -1) {
+      colorPickers[selectedColor].classList.remove('selected-color');
+    } 
+
+    selectedColor = newId;
+    colorPickers[selectedColor].classList.add('selected-color');
+
   }
 
-  window.addEventListener("resize", onWindowResize);
-
-  //Update shirt color on button press
-  function updateShirtColor(newColor = '', newId = 0){
-    if (!modelBase) return;
- 
-     modelBase.traverse((child)=>{
-       if (!child.isMesh) return;
- 
-       child.material.color = new THREE.Color(newColor)
-     })
-
-     const colorPickers = document.querySelectorAll('.color-picker')
-     selectedColor != -1? colorPickers[selectedColor].classList.remove('selected-color'):null
-
-     selectedColor = newId
-
-     colorPickers[selectedColor].classList.add('selected-color')
-
-   }
-
-  //Update shirt model on button press
-  function updateObject(obj = {}, newId = 0)
- {
+  //Update t-shirt model on button press
+  function updateObject(obj = {}, newId = 0) {
     //only updates if a new model is selected
-    if (newId == selectedModel) return
+    if (newId == selectedModel) return;
+
+    // we need two t-shirts 3D models in the scene: one is the t-shirt base model which will receive the color
+    // the other model is the t-shirt model that will receive the design. As it has transparency on the design map,
+    // once the map is applied to the 3D model it will become transparent, so we need a base model to keep
+    // the t-shirt in the scene and have the design over it
     
-    if (modelBase)
-      scene.remove(modelBase)
+    // if there is a previous t-shirt 3D model in the scene, let's remove it to load a new one
+    if (modelBase) scene.remove(modelBase);
 
-    modelBase = null
+    modelBase = null;
 
-    if (modelDesign)
-      scene.remove(modelDesign)
+    // same for the t-shirt design model
+    if (modelDesign) scene.remove(modelDesign);
 
-    modelDesign = null
+    modelDesign = null;
 
-    const textureLoader = new THREE.TextureLoader()
-    const normal = textureLoader.load(obj.normal)
-    const orm = textureLoader.load(obj.orm)
+    // normal map
+    const normal = textureLoader.load(obj.normal);
 
-    normal.flipY = false
-    orm.flipY = false
+    //ao + metalness + roughness
+    const orm = textureLoader.load(obj.orm);
+
+    normal.flipY = false;
+    orm.flipY = false;
   
     loader.load(
       obj.src,
       function (gltf) {
 
-        modelBase = gltf.scene
-        modelBase.name = 'tshirtBase'
-        scene.add(modelBase);
+        // load and initialize the base t-shirt model
+        modelBase = gltf.scene;
+        modelBase.name = 'tshirtBase';
+        scene.add(modelBase);;
         modelBase.position.set(0, 0, 0);
         modelBase.scale.set(0.2, 0.2, 0.2);
   
@@ -164,6 +152,7 @@ async function start() {
           if (!child.isMesh) return;
   
           child.castShadow = true;
+          child.receiveShadow = true;
   
           const childMaterial = new THREE.MeshStandardMaterial({
             color: 0xffffff,
@@ -175,9 +164,10 @@ async function start() {
           child.material = childMaterial;
         });
 
-        modelDesign = gltf.scene.clone()
+        // load and initialize the design t-shirt model. We need to clone gltf.scene otherwise it will be affected by the changes on modelBase
+        modelDesign = gltf.scene.clone();
         globalThis.modelDesign = modelDesign;
-        modelDesign.name = 'tshirtDesign'
+        modelDesign.name = 'tshirtDesign';
         scene.add(modelDesign);
         modelDesign.position.set(0, 0, 0);
         modelDesign.scale.set(0.2, 0.2, 0.2);
@@ -186,6 +176,7 @@ async function start() {
           if (!child.isMesh) return;
   
           child.castShadow = true;
+          child.receiveShadow = true;
   
           const childMaterial = new THREE.MeshStandardMaterial({
             color: 0xffffff,
@@ -197,122 +188,117 @@ async function start() {
           child.material = childMaterial;
         });
 
-      modelBase.visible = false
-      modelDesign.visible = false
+      modelBase.visible = false;
+      modelDesign.visible = false;
 
       //update selected element on palette
-      const shirtPickers = document.querySelectorAll('.shirt-picker')
-      selectedModel != -1? shirtPickers[selectedModel].classList.remove('selected-shirt'): null
-      selectedModel = newId
-      shirtPickers[newId].classList.add('selected-shirt')
+      const shirtPickers = document.querySelectorAll('.shirt-picker');
+      if (selectedModel != -1) {
+        selectedModel = shirtPickers[selectedModel].classList.remove('selected-shirt');
+      } else {
+        selectedModel = null;
+      }
+      selectedModel = newId;
+      shirtPickers[newId].classList.add('selected-shirt');
 
-      //update colors and stamps every time the model updates 
-      fetch("./assets/params.JSON")
-      .then(res => res.json())
-      .then(data => {
-        updateShirtColor(data.shirtColors[selectedColor], selectedColor)
-        updateStamp(data.shirtStamps[selectedStamp], selectedStamp)
-        modelBase.visible = true
-        modelDesign.visible = true
-        })
-      },
-      function (progress) {},
-      function (error) {
-        console.error(error);
-      },
-    );
- }
-
-  //Update shirt stamp on button press. fix transparency
- function updateStamp(stampObj = '', newId = 0){
-  
-  let map
-  let alphaMap = textureLoader.load("./assets/models/Shirt/textures/stamps/alphamap.png")
-  if (newId != 0)
-  {
-    map = textureLoader.load(stampObj.map)
-    map.flipY = false
-    map.colorSpace = THREE.SRGBColorSpace
+      //update colors and desings every time the model updates 
+      updateShirtColor(jsonData.shirtColors[selectedColor], selectedColor)
+      updateDesign(jsonData.shirtDesigns[selectedDesign], selectedDesign)
+      modelBase.visible = true
+      modelDesign.visible = true
+    });
   }
 
-  if (!modelDesign) return;
+  // Update shirt design on button press
+  function updateDesign(designObj = '', newId = 0){
+    let map;
 
-   modelDesign.traverse((child)=>{
-     if (!child.isMesh) return;
-      if (map)
-      {
-        child.material.map = map
-        child.material.transparent = true
-      }
-      else
-      {
-        child.material.map = null
-      }
-      child.material.needsUpdate = true
-   })
+    map = textureLoader.load(designObj.map);
+    map.flipY = false;
+    map.colorSpace = THREE.SRGBColorSpace;
 
-   //update selected element on palette
-   const maps = document.querySelectorAll('.stamp-picker')
-   maps[selectedStamp].classList.remove('selected-stamp')
-   selectedStamp = newId
-   maps[selectedStamp].classList.add('selected-stamp')
+    if (!modelDesign) return;
+
+    // apply the design on the modelDesign 3D model
+    modelDesign.traverse((child)=>{
+       if (!child.isMesh) return;
+        if (map)
+        {
+          child.material.map = map;
+          child.material.transparent = true;
+        }
+        else {
+          child.material.map = null;
+        }
+        child.material.needsUpdate = true;
+    })
+
+    //update selected element on palette
+    const maps = document.querySelectorAll('.design-picker');
+    maps[selectedDesign].classList.remove('selected-design');
+    selectedDesign = newId;
+    maps[selectedDesign].classList.add('selected-design');
  }
 
   //initialize shirt on start
-  function initializeShirt () {
-    fetch("./assets/params.JSON")
-    .then(res => res.json())
-    .then(data => {
-        updateObject(data.shirtTypes[0], 0)
-        updateShirtColor(data.shirtColors[0], 0)
-        updateStamp(data.shirtStamps[0], 0)
-    })
+  function initializeShirt() {
+    updateObject(jsonData.shirtTypes[0], 0);
+    updateShirtColor(jsonData.shirtColors[0], 0);
+    updateDesign(jsonData.shirtDesigns[0], 0);
   }
 
-  //create html palettes
+  //create UI
   function createPalletes(){
-    fetch("./assets/params.JSON")
-    .then(res => res.json())
-    .then(data => {
-        const colorContainer = document.getElementById('color-palette')
-        const shirtContainer = document.getElementById('shirt-palette')
-        const stampContainer = document.getElementById('stamp-palette')
-
-        data.shirtColors.map((el, id)=>{
-          const node = document.createElement('div')
-          node.classList.add('color-picker')
-
-          id == selectedColor? node.classList.add('selected-color') : null
-
-          node.style = `background-color: ${el}`
-          node.onclick = () => updateShirtColor(el, id)
-          colorContainer.appendChild(node)
-        })
+    const colorContainer = document.getElementById('color-palette');
+    const shirtContainer = document.getElementById('shirt-palette');
+    const designContainer = document.getElementById('design-palette');
     
-        data.shirtTypes.map((el, id)=>{
-          const node = document.createElement('img')
-          node.classList.add('shirt-picker')
-          node.src = el.thumb
-          node.onclick = () => updateObject(el, id)
-          shirtContainer.appendChild(node)
-        })
+    // load shirtColors from JSON and populates the UI color container
+    jsonData.shirtColors.map((el, id)=> {
+      const node = document.createElement('div');
+      node.classList.add('color-picker');
 
-        data.shirtStamps.map((el, id)=>{
-          const node = document.createElement('img')
-          node.classList.add('stamp-picker')
-          node.src = el.thumb
-          node.onclick = () => updateStamp(el, id)
-          stampContainer.appendChild(node)
-        })
+      if (id == selectedColor) {
+        node.classList.add('selected-color');
+      }
 
-        colorContainer.style.display = "flex"
-        shirtContainer.style.display = "flex"
-        stampContainer.style.display = "flex"
-      })
+      node.style = `background-color: ${el}`
+      node.onclick = () => updateShirtColor(el, id)
+      colorContainer.appendChild(node)
+    })
+
+    // load shirtTypes from JSON and populates the UI shirt types
+    jsonData.shirtTypes.map((el, id)=>{
+      const node = document.createElement('img');
+      node.classList.add('shirt-picker');
+      node.src = el.thumb;
+      node.onclick = () => updateObject(el, id);
+      shirtContainer.appendChild(node);
+    })
+
+    // load shirtDesigns from JSON and populates the UI shirt designs
+    jsonData.shirtDesigns.map((el, id) => {
+      const node = document.createElement('img');
+      node.classList.add('design-picker');
+      node.src = el.thumb;
+      node.onclick = () => updateDesign(el, id);
+      designContainer.appendChild(node);
+    })
+
+    colorContainer.style.display = "flex";
+    shirtContainer.style.display = "flex";
+    designContainer.style.display = "flex";
       
   }
 
-  createPalletes()
-  initializeShirt()
-  animate();
 }
+
+function onWindowResize() {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.render(scene, camera);
+}
+
+window.addEventListener("resize", onWindowResize);
