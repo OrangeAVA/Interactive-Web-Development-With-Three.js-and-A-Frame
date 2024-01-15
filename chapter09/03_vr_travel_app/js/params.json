@@ -1,0 +1,27 @@
+[
+    {
+        "name": "Aquarium",
+        "thumb": "./assets/images/thumbnails/aquarium.jpg",
+        "video": "./assets/videos/aquarium.mp4"
+    },
+    {
+        "name": "Beach",
+        "thumb": "./assets/images/thumbnails/beach.jpg",
+        "video": "./assets/videos/beach.mp4"
+    },
+    {
+        "name": "City",
+        "thumb": "./assets/images/thumbnails/city.jpg",
+        "video": "./assets/videos/city.mp4"
+    },
+    {
+        "name": "Desert",
+        "thumb": "./assets/images/thumbnails/desert.jpg",
+        "video": "./assets/videos/desert.mp4"
+    },
+    {
+        "name": "Forest",
+        "thumb": "./assets/images/thumbnails/forest.jpg",
+        "video": "./assets/videos/forest.mp4"
+    }
+]

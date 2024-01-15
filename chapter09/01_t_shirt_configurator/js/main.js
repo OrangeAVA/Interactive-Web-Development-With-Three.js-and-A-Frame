@@ -71,7 +71,7 @@ async function start() {
         jsonData = data;
 
         // once the json is fully loaded, let's create the UI and initialize the t-shirt
-        createPalletes();
+        createUI();
         initializeShirt();
         animate();
 
@@ -248,7 +248,7 @@ async function start() {
   }
 
   //create UI
-  function createPalletes(){
+  function createUI(){
     const colorContainer = document.getElementById('color-palette');
     const shirtContainer = document.getElementById('shirt-palette');
     const designContainer = document.getElementById('design-palette');
