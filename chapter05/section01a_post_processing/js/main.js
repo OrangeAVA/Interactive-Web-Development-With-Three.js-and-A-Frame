@@ -76,12 +76,7 @@ async function start() {
   container = document.querySelector("#threejsContainer");
   container.appendChild(renderer.domElement);
 
-  camera = new THREE.PerspectiveCamera(
-    60,
-    window.innerWidth / window.innerHeight,
-    0.1,
-    1000,
-  );
+  camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 0.1, 1000 );
   camera.position.set(0, 0, 5);
 
   controls = new OrbitControls(camera, renderer.domElement);
@@ -160,11 +155,11 @@ async function start() {
   torus.receiveShadow = true;
   scene.add(torus);
 
-  ///Initialize the Post Processing Stack - Composer and Render passes
+  // Initialize the Post Processing Stack - Composer and Render passes
   composer = new EffectComposer(renderer);
   const renderPass = new RenderPass(scene, camera);
 
-  ///halftone pass
+  // halftone pass
   halftonePass = new HalftonePass(window.innerWidth, window.innerHeight);
   console.log(halftonePass);
   halftonePass.params = {
@@ -179,7 +174,7 @@ async function start() {
   };
   halftonePass.enabled = false;
 
-  ///LUT pass - load the LUT tables to be used in the LUTPass
+  // LUT pass - load the LUT tables to be used in the LUTPass
   lutPass = new LUTPass();
   lutPass.enabled = false;
   console.log(lutPass);
@@ -196,7 +191,7 @@ async function start() {
       "https://threejs.org/examples/luts/" + name,
       function (result) {
         lutMap[name] = result;
-        ///run setupGUI() when the last LUT table has been loaded
+        // run setupGUI() when the last LUT table has been loaded
         if (index >= Object.keys(lutMap).length - 1) {
           setupGUI();
         }
@@ -204,27 +199,37 @@ async function start() {
     );
   });
 
-  /// SAO pass
+  //  SAO pass
   saoPass = new SAOPass(scene, camera);
   console.log(saoPass);
   saoPass.enabled = false;
 
-  /// SSAO pass
+  saoPass.params = {
+    saoIntensity: 0.18, // intensity of thee AO effect
+    saoScale: 1, // scale of thee AO effect
+    saoKernelRadius: 100, // increases the core of the AO effect
+    saoBlur: true,  // blurs the AO result
+    saoBlurRadius: 8,   // amount of AO blur
+    saoBlurStdDev: 4, // AO blur spread
+    output: SAOPass.OUTPUT.Default // 
+  }
+
+
+  //  SSAO pass
   ssAOPass = new SSAOPass(scene, camera);
   console.log(ssAOPass);
   ssAOPass.enabled = false;
 
-  /// Unreal Bloom pass
+  //  Unreal Bloom pass
   unrealBloomPass = new UnrealBloomPass(
-    new THREE.Vector2(window.innerWidth, window.innerHeight),
-    1.5,
-    0.4,
-    0.85,
-  );
+    new THREE.Vector2(window.innerWidth, window.innerHeight), 1.5, 0.4, 0.85 );
   unrealBloomPass.enabled = false;
+  unrealBloomPass.strength = 1.5;  // strength of the bloom effect
+  unrealBloomPass.threshold = 0.85;  // increases the effect threshold
+  unrealBloomPass.radius = 0.4;  //  increases the bloom radius
   console.log(unrealBloomPass);
 
-  ///Bokeh pass
+  // Bokeh pass
   bokehPass = new BokehPass(scene, camera, {
     focus: 1.0,
     aperture: 0.025,
@@ -233,16 +238,16 @@ async function start() {
   bokehPass.enabled = false;
   console.log(bokehPass);
 
-  ///DotScreen pass
+  // DotScreen pass
   dotScreenPass = new DotScreenPass(
-    new THREE.Vector2(0, 0), ///center
-    0.5, ///angle
-    0.8, ///scale
+    new THREE.Vector2(0, 0), // center
+    0.5, // angle
+    0.8, // scale
   );
   dotScreenPass.enabled = false;
   console.log(dotScreenPass);
 
-  ///Film pass
+  // Film pass
   filmPass = new FilmPass();
   filmPass.uniforms.grayscale.value = true;
   filmPass.uniforms.nIntensity.value = 0.35;
@@ -250,19 +255,22 @@ async function start() {
   filmPass.enabled = false;
   console.log(filmPass);
 
-  ///Glitch pass
+  // Glitch pass
   glitchPass = new GlitchPass();
+  glitchPass.goWild = false;
   glitchPass.enabled = false;
   console.log(glitchPass);
 
-  ///Pixelated pass
-  renderPixelatedPass = new RenderPixelatedPass(6, scene, camera);
+  // Pixelated pass
+  renderPixelatedPass = new RenderPixelatedPass(
+    6, //pixel size
+    scene, camera);
   renderPixelatedPass.enabled = false;
   renderPixelatedPass.normalEdgeStrength = 0.3;
   renderPixelatedPass.normalEdgeStrength = 0.4;
   console.log(renderPixelatedPass);
 
-  ///Outline pass
+  // Outline pass
   outlinePass = new OutlinePass(
     new THREE.Vector2(window.innerWidth, window.innerHeight),
     scene,
@@ -275,7 +283,7 @@ async function start() {
   outlinePass.usePatternTexture = false;
   console.log(outlinePass);
 
-  ///to enable the usePatternTexture option
+  // to enable the usePatternTexture option
   const textureLoader = new THREE.TextureLoader();
   textureLoader.load("../assets/images/tri_pattern.jpg", function (texture) {
     outlinePass.patternTexture = texture;
@@ -283,13 +291,13 @@ async function start() {
     texture.wrapT = THREE.RepeatWrapping;
   });
 
-  ///Afterimage pass
+  // Afterimage pass
   afterimagePass = new AfterimagePass();
   afterimagePass.uniforms.damp.value = 0.96;
   afterimagePass.enabled = false;
   console.log(afterimagePass);
 
-  ///Shader pass
+  // Shader pass
   sobelOperatorShader = new ShaderPass(SobelOperatorShader);
   console.log(sobelOperatorShader);
   sobelOperatorShader.enabled = false;
@@ -298,7 +306,7 @@ async function start() {
   sobelOperatorShader.uniforms["resolution"].value.y =
     window.innerHeight * window.devicePixelRatio;
 
-  ///Texture pass
+  // Texture pass
   texturePass = new TexturePass();
   texturePass.enabled = false;
   console.log(texturePass);
@@ -309,7 +317,17 @@ async function start() {
     },
   );
 
-  ///SMAA - Subpixel Morphological Antialiasing
+  texturePass.opacity = 0.5;
+  texturePass.blending = 1;
+
+  //   blending values:
+  //     NormalBlending: 1
+  //     AdditiveBlending: 2
+  //     SubtractiveBlending: 3
+  //     MultiplyBlending: 4
+
+
+  // SMAA - Subpixel Morphological Antialiasing
   sMAAPass = new SMAAPass(
     window.innerWidth * renderer.getPixelRatio(),
     window.innerHeight * renderer.getPixelRatio(),
@@ -317,17 +335,19 @@ async function start() {
   console.log(sMAAPass);
   sMAAPass.enabled = false;
 
-  ///sSAA - Supersample Antialiasing
+  // sSAA - Supersample Antialiasing
   sSAARenderPass = new SSAARenderPass(scene, camera);
   console.log(sSAARenderPass);
   sSAARenderPass.enabled = false;
+  sSAARenderPass.sampleLevel = 2;
 
-  ///TAA - Temporal Antialiasing
+  // TAA - Temporal Antialiasing
   tAARenderPass = new TAARenderPass(scene, camera);
   console.log(tAARenderPass);
   tAARenderPass.enabled = false;
+  tAARenderPass.sampleLevel = 2;
 
-  ///SSR - Screen Space reflections
+  // SSR - Screen Space reflections
   const groundReflector = null;
   sSRPass = new SSRPass({
     renderer,
@@ -341,7 +361,7 @@ async function start() {
   console.log(sSRPass);
   sSRPass.enabled = false;
 
-  /// Post Processing Stack
+  //  Post Processing Stack
   composer.addPass(renderPass);
   composer.addPass(halftonePass);
   composer.addPass(lutPass);
@@ -362,15 +382,12 @@ async function start() {
   composer.addPass(tAARenderPass);
   composer.addPass(sSRPass);
 
-  // composer.addPass(maskPass);
-  // composer.addPass(texturePass);
-
-  /// final pass (optional) - to perform sRGB color space conversion
+  //  final pass (optional) - to perform sRGB color space conversion
   outputPass = new OutputPass();
   console.log(outputPass);
   composer.addPass(outputPass);
 
-  ///SMAA passe should be applied AFTER outputPass, otherwise it won't work properly
+  // SMAA passe should be applied AFTER outputPass, otherwise it won't work properly
   composer.addPass(sMAAPass);
 
   animate();

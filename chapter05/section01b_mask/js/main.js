@@ -7,10 +7,7 @@ import { EffectComposer } from "https://unpkg.com/three@0.153.0/examples/jsm/pos
 import { RenderPass } from "https://unpkg.com/three@0.153.0/examples/jsm/postprocessing/RenderPass.js";
 import { OutputPass } from "https://unpkg.com/three@0.153.0/examples/jsm/postprocessing/OutputPass.js";
 
-import {
-  MaskPass,
-  ClearMaskPass,
-} from "https://unpkg.com/three@0.153.0/examples/jsm/postprocessing/MaskPass.js";
+import { MaskPass, ClearMaskPass } from "https://unpkg.com/three@0.153.0/examples/jsm/postprocessing/MaskPass.js";
 import { ClearPass } from "https://unpkg.com/three@0.153.0/examples/jsm/postprocessing/ClearPass.js";
 import { TexturePass } from "https://unpkg.com/three@0.153.0/examples/jsm/postprocessing/TexturePass.js";
 
@@ -55,12 +52,7 @@ function start() {
 
   renderer.setSize(window.innerWidth, window.innerHeight);
 
-  camera = new THREE.PerspectiveCamera(
-    50,
-    window.innerWidth / window.innerHeight,
-    1,
-    1000,
-  );
+  camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 1, 1000 );
   camera.position.z = 10;
 
   container = document.querySelector("#threejsContainer");
@@ -97,7 +89,7 @@ function start() {
   torus.rotation.set(Math.PI / 2, 0, 0);
   scene1.add(torus);
 
-  ///Initialize the Post Processing Stack
+  // Initialize the Post Processing Stack
 
   clearPass = new ClearPass();
   clearMaskPass = new ClearMaskPass();
@@ -111,6 +103,7 @@ function start() {
   );
   texture1.colorSpace = THREE.SRGBColorSpace;
   texture1.minFilter = THREE.LinearFilter;
+  
   const texture2 = new THREE.TextureLoader().load(
     "../assets/images/background_image_2.jpg",
   );
@@ -126,16 +119,16 @@ function start() {
   texturePass3 = new TexturePass(texture3);
 
   composer = new EffectComposer(renderer, renderTarget);
-  composer.addPass(clearPass); ///clear screen
-  composer.addPass(maskPass1); ///renders the mask of texturePass1
-  composer.addPass(texturePass1); ///renders texturePass1
+  composer.addPass(clearPass); // clear screen
+  composer.addPass(maskPass1); // renders the mask of texturePass1
+  composer.addPass(texturePass1); // renders texturePass1
   composer.addPass(maskPass2);
   composer.addPass(texturePass2);
   composer.addPass(maskPass3);
   composer.addPass(texturePass3);
   composer.addPass(clearMaskPass);
 
-  ///final pass - mandatory when using maskPass
+  // final pass - mandatory when using maskPass
   const outputPass = new OutputPass();
   composer.addPass(outputPass);
 

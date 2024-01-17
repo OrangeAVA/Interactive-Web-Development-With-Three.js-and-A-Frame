@@ -1,27 +1,32 @@
 [
     {
         "name": "Aquarium",
-        "thumb": "./assets/images/thumbnails/aquarium.jpg",
+        "id": "aquarium",
+        "thumb": "./assets/images/thumbs/thumb_aquarium.jpg",
         "video": "./assets/videos/aquarium.mp4"
     },
     {
         "name": "Beach",
-        "thumb": "./assets/images/thumbnails/beach.jpg",
+        "id": "beach",
+        "thumb": "./assets/images/thumbs/thumb_beach.jpg",
         "video": "./assets/videos/beach.mp4"
     },
     {
         "name": "City",
-        "thumb": "./assets/images/thumbnails/city.jpg",
+        "id": "city",
+        "thumb": "./assets/images/thumbs/thumb_city.jpg",
         "video": "./assets/videos/city.mp4"
     },
     {
         "name": "Desert",
-        "thumb": "./assets/images/thumbnails/desert.jpg",
+        "id": "desert",
+        "thumb": "./assets/images/thumbs/thumb_desert.jpg",
         "video": "./assets/videos/desert.mp4"
     },
     {
         "name": "Forest",
-        "thumb": "./assets/images/thumbnails/forest.jpg",
+        "id": "forest",
+        "thumb": "./assets/images/thumbs/thumb_forest.jpg",
         "video": "./assets/videos/forest.mp4"
     }
 ]

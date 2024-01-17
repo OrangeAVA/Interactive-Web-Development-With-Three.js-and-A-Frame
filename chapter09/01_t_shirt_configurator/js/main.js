@@ -262,9 +262,9 @@ async function start() {
         node.classList.add('selected-color');
       }
 
-      node.style = `background-color: ${el}`
-      node.onclick = () => updateShirtColor(el, id)
-      colorContainer.appendChild(node)
+      node.style = `background-color: ${el}`;
+      node.onclick = () => updateShirtColor(el, id);
+      colorContainer.appendChild(node);
     })
 
     // load shirtTypes from JSON and populates the UI shirt types
