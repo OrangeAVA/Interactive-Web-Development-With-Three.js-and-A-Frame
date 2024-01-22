@@ -211,7 +211,7 @@ async function start() {
     saoBlur: true,  // blurs the AO result
     saoBlurRadius: 8,   // amount of AO blur
     saoBlurStdDev: 4, // AO blur spread
-    output: SAOPass.OUTPUT.Default // 
+    output: SAOPass.OUTPUT.Default // Default: original + AO // SAO: SAO only // Normal: only normals
   }
 
 
@@ -219,6 +219,10 @@ async function start() {
   ssAOPass = new SSAOPass(scene, camera);
   console.log(ssAOPass);
   ssAOPass.enabled = false;
+  ssAOPass.kernelRadius = 8; // increase the core of the AO effect
+  ssAOPass.minDistance = 0.005;  // min distance to be considered when rendering AO
+  ssAOPass.maxDistance = 0.1; // max distance to be considered when rendering AO
+  ssAOPass.output = SSAOPass.OUTPUT.Default; // effect output
 
   //  Unreal Bloom pass
   unrealBloomPass = new UnrealBloomPass(

@@ -38,3 +38,36 @@ AFRAME.registerComponent('scene-environment', {
     tick: function() {
     }
 });
+
+
+AFRAME.registerComponent('group-opacity', {
+  schema: {default: 1.0},
+  init: function () {
+  },
+  update: function () {
+
+    const mesh = this.el.object3D;
+
+    var data = this.data;
+    if (!mesh) { return; }
+
+    mesh.traverse(function (node) {
+      
+      if (node.isMesh) {
+
+        if (node.el.components.text) {
+          node.el.setAttribute('opacity', data);
+        }
+
+        node.material.opacity = data;
+        node.material.needsUpdate = true;
+
+        if (node.material.opacity <= 0) {
+          node.visible = false;
+        } else {
+          node.visible = true;
+        }
+      }
+    });
+  }
+});
