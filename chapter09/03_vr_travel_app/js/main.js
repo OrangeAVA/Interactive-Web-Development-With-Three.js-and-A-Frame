@@ -10,7 +10,7 @@ const Delay = (milliseconds) => {
   });
 };
 
-
+const sceneEl = document.querySelector('a-scene');
 const videos = document.querySelector('#videos');
 const vrEnvironment = document.querySelector('#vr_environment');
 const menuContainer = document.querySelector('#menu_container');
@@ -74,7 +74,7 @@ const createUI = function(){
 
       const title = document.createElement('a-text');
       thumbContainer.appendChild(title);
-      title.setAttribute('position','0 0.8 -2.01');
+      title.setAttribute('position','0 0.8 -2.001');
       title.setAttribute('width', '1.6');
       title.setAttribute('align', 'center');
       title.setAttribute('value', el.name);
@@ -88,7 +88,19 @@ const createUI = function(){
       const halfpoint = rotationVariation/2*jsonData.length - rotationVariation/2;
       menuContainer.setAttribute('rotation',`0 ${halfpoint} 0`);
       
-    })
+    });
+
+    sceneEl.addEventListener("enter-vr", async () =>  {
+      if (sceneEl.is("vr-mode")) {
+        vrInterface.setAttribute('position','0 3.25 0');
+        closeBtn.setAttribute('position','0.8 0.45 -2');
+      }
+    });
+
+    sceneEl.addEventListener("exit-vr", async () =>  {
+      vrInterface.setAttribute('position','0 1.9 0');
+      closeBtn.setAttribute('position','1 0.65 -1');
+    });
 
 }
 

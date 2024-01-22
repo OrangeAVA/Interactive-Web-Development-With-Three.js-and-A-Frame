@@ -39,9 +39,9 @@
 
 
         <!-- Camera -->
-        <a-entity id="rig" movement-controlsXXX position="0 0 0" rotation="0 0 0">
+        <a-entity id="rig" position="0 3 0" rotation="0 0 0">
 
-          <a-entity camera="near: 0.005; fov:75;" id="camera" position="0 1 0" look-controls="pointerLockEnabled: false">
+          <a-entity camera="near: 0.005; fov:75;" id="camera" position="0 0 0" look-controls="pointerLockEnabled: false">
             <a-circle id="close_btn" position="1 0.65 -1" scale="0.05 0.05 0.05" color="#000000" material="shader:flat" visible="false">
               <a-text position="0 0.166 0.01" value="x" text="anchor: center;align: center; wrapCount: 5" material="shader:flat"></a-text>
             </a-circle>
@@ -56,7 +56,7 @@
         <a-entity id="container" position="0 0 0">
             <a-entity id="scene_container" rotation="0 0 0">
 
-              <a-entity id="vr_interface"
+              <a-entity id="vr_interface" position="0 1.9 0"
                 animation__fade_out="property: group-opacity; from: 1; to: 0; dur: 1000; easing: linear; startEvents: fadeOut"
                 animation__fade_in= "property: group-opacity; from: 0; to: 1; dur: 1000; easing: linear; startEvents: fadeIn"
               >
@@ -66,7 +66,8 @@
                 <a-text position="0 1.25542 -1" value="Navigate through the destinations to get immersed into it" text="anchor: center; width: 0.85; align: center; wrapCount: 28.05" material="shader: flat"></a-text>
 
                 <a-entity id="menu_container" position="0 0 1"></a-entity>
-                <a-sky id="room" src="#room_img" radius="3" rotation="0 121 0" ></a-sky>
+
+                <a-sky id="room" src="#room_img" radius="250" rotation="0 121 0" ></a-sky>
               </a-entity>
 
 
