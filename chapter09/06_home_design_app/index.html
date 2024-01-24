@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+  <head>
+    <title></title>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
+    <link rel="stylesheet" type="text/css" href="styles.css" media="all" />
+
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://unpkg.com/three@0.153.0/build/three.module.js"
+        }
+      }
+    </script>
+    <script type="module" src="js/main.js"></script>
+  </head>
+
+  <body style="touch-action: none">
+    <div id="threejsContainer"></div>
+    <div class="palette-container">
+      <div id="category-palette"></div>
+    </div>
+
+    <div id="menu-container">
+      <header id="menu-header">
+        <h2 id="menu-title">Placeholder Title</h2>
+        <img id="menu-close-btn" src="./assets/ui/close-btn.svg"></img>
+      </header>
+      <main id="menu-contents">
+      </main>
+    </div>
+
+    <div id="mode-buttons-container">
+      <img src="./assets/ui/translate.svg" alt="" class="mode-btn control-selected">
+      <img src="./assets/ui/rotate.svg" alt="" class="mode-btn">
+      <img src="./assets/ui/scale.svg" alt="" class="mode-btn">
+    </div>
+
+    <div id="buttons-container">
+      <img src="./assets/ui/addlight.svg" alt="" class="btn" id="add-light-btn">
+      <img src="./assets/ui/delete.svg" alt="" class="btn" id="delete-obj-btn">
+    </div>
+
+    <div id="light-adjustments-container">
+      <h3>Selected Light Options</h3>    
+      <div class="inputs">
+        <div class="input-container">
+          <p id="light-intensity-text">Intensity: 1.0</p>
+          <input type="range" name="" id="light-intensity-input" min="0" max="2" value="1" step="0.1">
+        </div>
+        <div class="input-container">
+          <p id="light-color-text">Color: #ffffff</p>
+          <input type="color" id="light-color-input" name="head" value="#ffffff" defaultValue="ffffff"/>
+        </div>
+      </div>
+    </div>
+
+
+
+  </body>
+</html>

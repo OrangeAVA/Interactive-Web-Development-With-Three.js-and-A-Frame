@@ -1,0 +1,167 @@
+body, html {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  font-family: sans-serif;
+}
+
+video {
+    position: absolute !important;
+    min-width: 100% !important;
+    min-height: 100% !important;
+    width: auto !important;
+    height: auto !important;
+    margin: 0 !important;
+}
+
+* {
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+button {
+    border: none;
+    color: #000;
+    background-color: #fff;
+    pointer-events: all;
+    cursor: pointer;
+}
+
+.fake-background {
+    background-image: url(./assets/images/background.jpg);
+    background-size: 100% 100%;
+}
+
+.fake-background video {
+    display: none;
+}
+
+.fade {
+    opacity: 0;
+    visibility: hidden;
+    transition:
+        opacity 0.5s ease-in-out,
+        visibility 0.5s ease-in-out;
+    -moz-transition:
+        opacity 0.5s ease-in-out,
+        visibility 0.5s ease-in-out;
+    -webkit-transition:
+        opacity 0.5s ease-in-out,
+        visibility 0.5s ease-in-out;
+}
+
+.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.a-enter-vr-button, .a-enter-ar-button {
+  display: none;
+}
+
+#ui {
+    position: absolute;
+    z-index: 99;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: flex-end;
+    align-items: center;
+    box-sizing: border-box;
+    pointer-events: none;
+}
+
+#tap_to_place_btn {
+    width: 100%;
+    height: 100%;
+    pointer-events: all;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.message {
+    position: absolute;
+    margin-bottom: 40px;
+}
+
+.message span {
+    background-color: #ffae00bd;
+    padding: 20px;
+}
+
+.popup {
+    position: absolute;
+    z-index: 9;
+    width: 100%;
+    height: 100%;
+    margin-bottom: 40px;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: flex-end;
+    align-items: center;
+    pointer-events: all;
+}
+
+.popup .container {
+    background-color: #ffae00bd;
+    padding: 40px;
+    text-align: center;
+    position: relative;
+}
+
+.popup .buttons {
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-top: 30px;
+}
+
+.popup .buttons button.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.popup h1 {
+    margin-top: 0;
+}
+
+.popup .buttons button {
+    padding: 10px 20px;
+}
+
+#splash {
+    z-index: 9999;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+}
+
+#close_btn {
+    font-size: 20px;
+    font-weight: bold;
+    position: absolute;
+    right: 0;
+    top: 0;
+}

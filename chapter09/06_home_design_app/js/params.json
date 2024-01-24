@@ -1,0 +1,87 @@
+{
+    
+    "objects": [
+        {"name": "Arm Chair 01", "path": "armchair01", "id": 0},
+        {"name": "Arm Chair 02", "path": "armchair02", "id": 1},
+        {"name": "Arm Chair 03", "path": "armchair03", "id": 2},
+        {"name": "Bathroom Sink 01", "path": "bathroom_sink01", "id": 3},
+        {"name": "Bathroom Sink 02", "path": "bathroom_sink02", "id": 4},
+        {"name": "Bathroom Sink 03", "path": "bathroom_sink03", "id": 5},
+        {"name": "Bed Couple 01", "path": "bed_full01", "id": 6},
+        {"name": "Bed Couple 02", "path": "bed_full02", "id": 7},
+        {"name": "Bed Single 01", "path": "bed_single01", "id": 8},
+        {"name": "Bed Single 02", "path": "bed_single02", "id": 9},
+        {"name": "Cabinet 01", "path": "cabinet01", "id": 10},
+        {"name": "Cabinet 02", "path": "cabinet02", "id": 11},
+        {"name": "Chair 01", "path": "chair01", "id": 12},
+        {"name": "Chair 02", "path": "chair02", "id": 13},
+        {"name": "Chair 03", "path": "chair03", "id": 14},
+        {"name": "Cooktop 01", "path": "cooktop01", "id": 15},
+        {"name": "Couch 01", "path": "couch01", "id": 16},
+        {"name": "Couch 02", "path": "couch02", "id": 17},
+        {"name": "Couch 03", "path": "couch03", "id": 18},
+        {"name": "Fireplace 01", "path": "fireplace01", "id": 19},
+        {"name": "Fireplace 02", "path": "fireplace02", "id": 20},
+        {"name": "Fridge 01", "path": "fridge01", "id": 21},
+        {"name": "Fridge 02", "path": "fridge02", "id": 22},
+        {"name": "Cupboard", "path": "kitchen_cupboard01", "id": 23},
+        {"name": "Sink", "path": "kitchen_sink01", "id": 24},
+        {"name": "Light 01", "path": "lighting01", "id": 25},
+        {"name": "Light 02", "path": "lighting02", "id": 26},
+        {"name": "Light 03", "path": "lighting03", "id": 27},
+        {"name": "Small Table", "path": "small_table01", "id": 28},
+        {"name": "Stove 01", "path": "stove01", "id": 29},
+        {"name": "Stove 02", "path": "stove02", "id": 30},
+        {"name": "Table 01", "path": "table01", "id": 31},
+        {"name": "Table 02", "path": "table02", "id": 32},
+        {"name": "Table 03", "path": "table03", "id": 33},
+        {"name": "Table 04", "path": "table04", "id": 34},
+        {"name": "Toilet 01", "path": "toilet01", "id": 35},
+        {"name": "TV Stand 01", "path": "tv_stand01", "id": 36},
+        {"name": "TV Stand 02", "path": "tv_stand02", "id": 37},
+        {"name": "TV Stand 03", "path": "tv_stand03", "id": 38},
+        {"name": "Wardrobe 01", "path": "wardrobe01", "id": 39},
+        {"name": "Wardrobe 02", "path": "wardrobe02", "id": 40},
+        {"name": "Wall Piece", "path": "wallpiece", "id": 41},
+        {"name": "Floor Piece", "path": "floorpiece", "id": 42}
+    ],
+    
+    "categories": [
+        {
+            "id": 0,
+            "name":  "Living Room", 
+            "thumb": "./assets/images/furniture/armchair01.jpg",
+            "objects": [0,1,2,10,11,12,23,14,16,17,18,19,20,28,31,32,33,34,36,37,38]
+        },
+        {
+            "id": 1,
+            "name":  "Kitchen", 
+            "thumb": "./assets/images/furniture/cooktop01.jpg",
+            "objects": [15,21,22,23,24,29,30]
+        },
+        {
+            "id": 2,
+            "name":  "Bedroom", 
+            "thumb": "./assets/images/furniture/bed_full01.jpg",
+            "objects": [0,1,2,6,7,8,9,10,11,36,37,38,39,40]
+        },
+        {
+            "id": 3,
+            "name":  "Bathroom", 
+            "thumb": "./assets/images/furniture/bathroom_sink02.jpg",
+            "objects": [3,4,5,35,23,24]
+        },
+        {
+            "id": 4,
+            "name":  "Lights", 
+            "thumb": "./assets/images/furniture/lighting01.jpg",
+            "objects": [25,26,27]
+        },
+        {
+            "id": 5,
+            "name":  "Structure", 
+            "thumb": "./assets/images/furniture/structure.jpg",
+            "objects": [41,42]
+        }
+    ]
+}

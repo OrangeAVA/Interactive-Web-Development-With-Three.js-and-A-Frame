@@ -1,0 +1,7 @@
+[
+    {"type": "object", "id": 42, "position": [0,0,0], "rotation": [0,0,0], "scale": [4,1,4]},
+    {"type": "object", "id": 41, "position": [-2.0,0,0], "rotation": [0,0,0], "scale": [1,1,4]},
+    {"type": "object", "id": 41, "position": [0,0,-2.0], "rotation": [0,-90,0], "scale": [1,1,4]},
+
+    {"type": "light", "position": [0,3,0], "intensity": 0.75, "color": "#ffffff"}
+]

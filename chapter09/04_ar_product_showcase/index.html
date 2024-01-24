@@ -1,0 +1,136 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Chapter 7 - A-Frame webAR Product Showcase</title>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
+    <link rel="stylesheet" type="text/css" href="styles.css" media="all" />
+
+    <script src="https://unpkg.com/aframe@1.4.2/dist/aframe-master.js"></script>
+    <script src="https://unpkg.com/aframe-extras@7.1.0/dist/aframe-extras.min.js"></script>
+
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+
+    <script src="https://unpkg.com/three@0.147.0/examples/js/loaders/RGBELoader.js"></script>
+
+    <script type="module" src="js/components.js"></script>
+    <script type="module" src="js/main.js"></script>
+  </head>
+
+    <body style="touch-action: none" class="">
+
+        <div id="ui">
+          <div id="splash" class="popup fade show">
+            <span>Allow camera and gyro permissions to start</span>
+          </div>
+          <div id="tap_to_place_btn" class="message fade show">
+            <span>Tap on the screen to place the AR scene</span>
+          </div>
+          <div id="tap_product" class="message fade">
+            <span>Tap on a product to see more details</span>
+          </div>
+          <div id="product_info" class="popup fade">
+            <div class="container">
+              <button id="close_btn">x</button>
+              <h1></h1>
+              <p></p>
+              <div class="buttons">
+                <button id="btn_activate">Activate</button>
+                <button id="btn_deactivate" class="disabled">Deactivate</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <a-scene
+            renderer="logarithmicDepthBuffer: true;"
+            embedded arjs
+            loading-screen="enabled: true;"
+            scene-environment="hdrImage:./assets/images/pisa.hdr; hdrExposure: 1;"
+            gltf-model="dracoDecoderPath: https://ar-libs.blippar.com/components/draco/1.4.1/;"
+            raycaster="objects: .clickable"
+            cursor="fuse: false; rayOrigin: mouse"
+        >
+            <a-assets>
+              <img id="tap-top-place-img" src="./assets/images/tap_to_place.jpg" />
+              <a-asset-item id="product-glb" src="./assets/models/product.glb"></a-asset-item>
+            </a-assets>
+
+            <a-entity camera="fov: 75; zoom: 2;" id="camera"
+            wasd-controls-enabled="false"
+            look-controls="enabled: true; touchEnabled: false;" ></a-entity>
+
+            <a-entity id="ar-scene" position="0 0 0">
+
+              <a-entity light="type: ambient; intensity: 0.5;"></a-entity>
+              <a-entity light="type: point; color: #ffffff; intensity: 0.35; castShadow: true" 
+              position="1.5 3.3 2.4"></a-entity>
+              <a-entity light="type: point; color: #ffffff; intensity: 0.35; castShadow: true" 
+              position="-2.7 2.7 1.3"></a-entity>
+              <a-entity light="type: point; color: #ffffff; intensity: 0.2; castShadow: true" 
+              position="-0.09 1.4 -5.2"></a-entity>
+
+              <a-entity id="placement-container" position="0 0 0" tap-to-place="enabled: true;">
+
+                <a-entity position="0 -1.5 -7" scale="1 1 1">
+
+                  <a-circle id="placement-marker" rotation="-90 0 0" opacity="0.7" transparent="true" 
+                  material="shader: flat" src="#tap-top-place-img"
+                  animation__scale_down="property: scale; from: 1 1 1; to: 0 0 0; dur: 2000; easing: easeInOutElastic; loop: false; startEvents: placementMarkerScaleDown"
+                  ></a-circle>
+
+
+                  <a-entity id="products-container" position="0 0 5" visible="true">
+                    
+                    <a-entity id="product01" class="container" rotation="0 30 0">
+                      <a-entity gltf-model="#product-glb" position="0 0 -5" scale="0 0 0"
+                        class="product clickable"
+                        product-component="color:0xff0000"
+                        animation__scale_up="property: scale; from: 0 0 0; to: 1 1 1; dur: 1000; easing: easeInOutSine; loop: false; startEvents: productScaleUp"
+                        animation__move_up="property: position; from: 0 0 -5; to: 0 2 -5; dur: 1000; easing: easeInOutSine; loop: false; startEvents: productMoveUp"
+                        animation__move_forward="property: position; to: 0 2 -2; dur: 1000; easing: easeInOutSine; loop: false; startEvents: productMoveForward"
+                        animation__move_back="property: position; to: 0 2 -5; dur: 1000; easing: easeInOutSine; loop: false; startEvents: productMoveBack"
+                      >
+                      </a-entity>
+                    </a-entity>
+
+                    <a-entity id="product02" class="container" rotation="0 0 0">
+                      <a-entity gltf-model="#product-glb" position="0 0 -5" scale="0 0 0"
+                      class="product clickable"
+                      product-component="color:0x00ff00"
+                      animation__scale_up="property: scale; from: 0 0 0; to: 1 1 1; dur: 1000; easing: easeInOutSine; loop: false; startEvents: productScaleUp"
+                      animation__move_up="property: position; from: 0 0 -5; to: 0 2 -5; dur: 1000; easing: easeInOutSine; loop: false; startEvents: productMoveUp"
+                      animation__move_forward="property: position; to: 0 2 -2; dur: 1000; easing: easeInOutSine; loop: false; startEvents: productMoveForward"
+                      animation__move_back="property: position; to: 0 2 -5; dur: 1000; easing: easeInOutSine; loop: false; startEvents: productMoveBack"
+                      >
+                      </a-entity>
+                    </a-entity>
+
+                    <a-entity id="product03" class="container" rotation="0 -30 0">
+                      <a-entity gltf-model="#product-glb" position="0 0 -5" scale="0 0 0"
+                      class="product clickable"
+                      product-component="color:0x0000ff"
+                      animation__scale_up="property: scale; from: 0 0 0; to: 1 1 1; dur: 1000; easing: easeInOutSine; loop: false; startEvents: productScaleUp"
+                      animation__move_up="property: position; from: 0 0 -5; to: 0 2 -5; dur: 1000; easing: easeInOutSine; loop: false; startEvents: productMoveUp"
+                      animation__move_forward="property: position; to: 0 2 -2; dur: 1000; easing: easeInOutSine; loop: false; startEvents: productMoveForward"
+                      animation__move_back="property: position; to: 0 2 -5; dur: 1000; easing: easeInOutSine; loop: false; startEvents: productMoveBack"
+                      >
+                      </a-entity>
+                    </a-entity>
+
+
+                  </a-entity>
+
+                </a-entity>
+                
+              </a-entity>
+
+            </a-entity>
+
+        </a-scene>
+
+
+    </body>
+</html>
