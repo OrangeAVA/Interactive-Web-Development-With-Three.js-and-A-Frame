@@ -380,7 +380,9 @@ function changeTransformMode(modeID){
 
 //initializes a default scene loaded from the JSON in the line 470
 async function initializeObjects() {
-  sceneData.map((el) =>  {
+
+  await sceneData.map(async el => {
+    
     if (el.type == "object")
     {
       const object = jsonData.objects.filter((object)=>{
@@ -393,12 +395,14 @@ async function initializeObjects() {
 
       addObject(object[0], position, rotation, scale, false)
     }
-    else if (el.type == "light"){
+    else if (el.type == "light") {
       const position = new THREE.Vector3(el.position[0], el.position[1], el.position[2])
-
       addLight(position, el.intensity, el.color, false)
     }
-  })
+    
+  });
+    
+  await Delay(100);
 
   transformControls.detach()
   selectedObject = null
@@ -554,4 +558,13 @@ document.onmousemove = function() {
     return;
   };
   isDragging = true;
+};
+
+
+const Delay = (milliseconds) => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve();
+    }, milliseconds);
+  });
 };
