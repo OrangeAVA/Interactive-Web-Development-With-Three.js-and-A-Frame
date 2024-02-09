@@ -1,0 +1,20 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+
+body, html {
+	margin: 0;
+	padding: 0;
+	background-color: #1e1a20;
+	overflow: hidden;
+}
+
+.label {
+	color: #FFF;
+	font-family: sans-serif;
+	padding: 2px;
+	background: rgba( 0, 0, 0, .6 );
+	font-size: 16px;
+	text-align: left;
+}
