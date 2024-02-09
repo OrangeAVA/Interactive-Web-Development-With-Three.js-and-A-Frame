@@ -30,6 +30,12 @@ const products = {
     name: 'Product 03',
     description: 'This is the description of the Product 03'
   },
+  product04: {
+    name: 'Product 04',
+    description: 'This is the description of the Product 03'
+  },
+
+
 }
 
 let activeProduct = null;
@@ -41,14 +47,15 @@ async function start() {
   document.querySelector('#tap_to_place_btn').addEventListener('click', async function() {
     tapToPlace();
   })
-
-  document.querySelector('#btn_activate').addEventListener('click', async function() {
+/* 
+  document.querySelector('#btn_try').addEventListener('click', async function() {
     activateProduct();
   });
 
-  document.querySelector('#btn_deactivate').addEventListener('click', async function() {
+  document.querySelector('#btn_return').addEventListener('click', async function() {
     deactivateProduct();
   });
+ */
 
   document.querySelector('#close_btn').addEventListener('click', async function() {
     closeProductPopup();
@@ -67,13 +74,13 @@ const tapToPlace = async function() {
   await Delay(1600);
 
   ///scale the products up and move them to the right position
-  document.querySelector('#product02 a-entity').emit('productScaleUp');
-  document.querySelector('#product02 a-entity').emit('productMoveUp');
-
-  await Delay(800);
-
   document.querySelector('#product01 a-entity').emit('productScaleUp');
   document.querySelector('#product01 a-entity').emit('productMoveUp');
+
+  await Delay(800);
+  
+  document.querySelector('#product02 a-entity').emit('productScaleUp');
+  document.querySelector('#product02 a-entity').emit('productMoveUp');
 
   await Delay(800);
 
@@ -81,6 +88,12 @@ const tapToPlace = async function() {
   document.querySelector('#product03 a-entity').emit('productMoveUp');
 
   await Delay(800);
+
+  document.querySelector('#product04 a-entity').emit('productScaleUp');
+  document.querySelector('#product04 a-entity').emit('productMoveUp');
+
+  await Delay(800);
+
 
   ///show the Tap to the product message
   document.querySelector('#tap_product').classList.add('show');
@@ -90,6 +103,7 @@ const tapToPlace = async function() {
   ///iterate through the products to read the clicks on them
   productList.forEach(function(element) {
     element.addEventListener('click', async function() {
+
       activeProduct = this.id;
       selectProduct(activeProduct);
 
@@ -97,6 +111,55 @@ const tapToPlace = async function() {
       document.querySelector('#product_info').classList.add('show');
       document.querySelector('#product_info h1').innerHTML = products[activeProduct].name;
       document.querySelector('#product_info p').innerHTML = products[activeProduct].description;
+
+      //gets the current 3D object and its animations
+      const object = element.querySelector("a-entity")
+      const animations = object.object3D.children[0].animations
+
+      //ANIMATION FILTERS
+      //Get all animation names. Those model animations' either finish with "start", "middle" or "end"
+      //boatEnd, planeStart, carMiddle, etc.
+      //filters start animations
+      const startAnimations = animations.filter((el)=>{
+        return el.name.includes("Start") || el.name.includes("start")
+      })
+
+      //filters middle animations
+      const middleAnimations = animations.filter((el)=>{
+        return el.name.includes("Middle") || el.name.includes("middle")
+      })
+
+      //filters end animations
+      const endAnimations = animations.filter((el)=>{
+        return el.name.includes("End") || el.name.includes("end")
+      })
+
+      //links the popup buttons to the object animation
+      document.querySelector('#btn_try').onclick = function(){
+          //show stop button
+          document.querySelector('#go_back_container').classList.add('show');
+          document.querySelector('#product_info').classList.remove('show');
+
+          //play start animation
+          element.querySelector("a-entity").setAttribute("animation-mixer",{clip: startAnimations[0].name, loop: "once", crossFadeDuration:1.0}) 
+          if (startAnimations.length == 2)
+            element.querySelector("a-entity").setAttribute("animation-mixer1",{clip: startAnimations[1].name, loop: "once", crossFadeDuration:1.0}) 
+
+          //play loop animation
+          element.querySelector("a-entity").setAttribute("animation-mixer",{clip: middleAnimations[0].name, loop: "repeat", crossFadeDuration:1.0}) 
+          if (middleAnimations.length == 2)
+            element.querySelector("a-entity").setAttribute("animation-mixer1",{clip: middleAnimations[1].name, loop: "repeat", crossFadeDuration:1.0}) 
+
+          //Play finish animation on button click
+          document.querySelector('#btn_back').onclick = function(){
+            element.querySelector("a-entity").setAttribute("animation-mixer",{clip: endAnimations[0].name, loop: "once", crossFadeDuration:1.0}) 
+            if (endAnimations.length == 2)
+              element.querySelector("a-entity").setAttribute("animation-mixer1",{clip: endAnimations[1].name, loop: "once", crossFadeDuration:1.0}) 
+            document.querySelector('#product_info').classList.add('show');
+            document.querySelector('#go_back_container').classList.remove('show')
+          }
+
+      }
     })
   })
 }
@@ -130,9 +193,7 @@ const selectProduct = async function(product) {
 
   ///move the product forward
   document.querySelector('#'+product + ' .product').emit('productMoveForward');
-
 }
-
 
 const closeProductPopup = async function() {
 
@@ -151,8 +212,4 @@ const closeProductPopup = async function() {
   await Delay(500);
 
   document.querySelector('#tap_product').classList.add('show');
-
-  ///reset the activate/deactivate buttons to prepare for the next interaction
-  document.querySelector('#btn_activate').classList.remove('disabled');
-  document.querySelector('#btn_deactivate').classList.add('disabled'); 
 }

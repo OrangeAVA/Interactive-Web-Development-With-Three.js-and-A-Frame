@@ -46,7 +46,7 @@ AFRAME.registerComponent('product-component', {
   },
   init: function () {
     const scope = this;
-
+    console.log(scope.el.object3D)
     scope.changeColor = function(element, color) {
 
       const elementMesh = element.getObject3D('mesh');

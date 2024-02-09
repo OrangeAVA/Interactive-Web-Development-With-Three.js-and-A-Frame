@@ -16,6 +16,8 @@
     <script src="https://unpkg.com/three@0.147.0/examples/js/loaders/RGBELoader.js"></script>
 
     <script type="module" src="js/components.js"></script>
+    <script type="module" src="js/animation-mixer1.js"></script>
+
     <script type="module" src="js/main.js"></script>
   </head>
 
@@ -37,11 +39,18 @@
               <h1></h1>
               <p></p>
               <div class="buttons">
-                <button id="btn_activate">Activate</button>
-                <button id="btn_deactivate" class="disabled">Deactivate</button>
+                <button id="btn_try">Try it out!</button>
               </div>
             </div>
           </div>
+          <div id="go_back_container" class="popup fade">
+            <div class="buttons">
+              <button id="btn_back">Go back</button>
+            </div>
+          </div>
+
+
+
         </div>
 
         <a-scene
@@ -55,7 +64,10 @@
         >
             <a-assets>
               <img id="tap-top-place-img" src="./assets/images/tap_to_place.jpg" />
-              <a-asset-item id="product-glb" src="./assets/models/product.glb"></a-asset-item>
+              <a-asset-item id="boat-glb" src="./assets/models/boat.glb"></a-asset-item>
+              <a-asset-item id="car-glb" src="./assets/models/car.glb"></a-asset-item>
+              <a-asset-item id="plane-glb" src="./assets/models/plane.glb"></a-asset-item>
+              <a-asset-item id="rocket-glb" src="./assets/models/rocket.glb"></a-asset-item>
             </a-assets>
 
             <a-entity camera="fov: 75; zoom: 2;" id="camera"
@@ -85,22 +97,25 @@
                   <a-entity id="products-container" position="0 0 5" visible="true">
                     
                     <a-entity id="product01" class="container" rotation="0 30 0">
-                      <a-entity gltf-model="#product-glb" position="0 0 -5" scale="0 0 0"
+                      <a-entity gltf-model="#boat-glb" position="0 0 -5" scale="0 0 0"
                         class="product clickable"
                         product-component="color:0xff0000"
-                        animation__scale_up="property: scale; from: 0 0 0; to: 1 1 1; dur: 1000; easing: easeInOutSine; loop: false; startEvents: productScaleUp"
+                        animation__scale_up="property: scale; from: 0 0 0; to: 0.1 0.1 0.1; dur: 1000; easing: easeInOutSine; loop: false; startEvents: productScaleUp"
                         animation__move_up="property: position; from: 0 0 -5; to: 0 2 -5; dur: 1000; easing: easeInOutSine; loop: false; startEvents: productMoveUp"
                         animation__move_forward="property: position; to: 0 2 -2; dur: 1000; easing: easeInOutSine; loop: false; startEvents: productMoveForward"
                         animation__move_back="property: position; to: 0 2 -5; dur: 1000; easing: easeInOutSine; loop: false; startEvents: productMoveBack"
-                      >
+                        animation__start_animation="property: animation_mixer; to: ; dur: 1000; easing: easeInOutSine; loop: false; startEvents: productMoveBack"
+
+
+                        >
                       </a-entity>
                     </a-entity>
 
-                    <a-entity id="product02" class="container" rotation="0 0 0">
-                      <a-entity gltf-model="#product-glb" position="0 0 -5" scale="0 0 0"
+                    <a-entity id="product02" class="container" rotation="0 10 0">
+                      <a-entity gltf-model="#car-glb" position="0 0 -5" scale="0 0 0"
                       class="product clickable"
                       product-component="color:0x00ff00"
-                      animation__scale_up="property: scale; from: 0 0 0; to: 1 1 1; dur: 1000; easing: easeInOutSine; loop: false; startEvents: productScaleUp"
+                      animation__scale_up="property: scale; from: 0 0 0; to: 0.1 0.1 0.1; dur: 1000; easing: easeInOutSine; loop: false; startEvents: productScaleUp"
                       animation__move_up="property: position; from: 0 0 -5; to: 0 2 -5; dur: 1000; easing: easeInOutSine; loop: false; startEvents: productMoveUp"
                       animation__move_forward="property: position; to: 0 2 -2; dur: 1000; easing: easeInOutSine; loop: false; startEvents: productMoveForward"
                       animation__move_back="property: position; to: 0 2 -5; dur: 1000; easing: easeInOutSine; loop: false; startEvents: productMoveBack"
@@ -108,11 +123,11 @@
                       </a-entity>
                     </a-entity>
 
-                    <a-entity id="product03" class="container" rotation="0 -30 0">
-                      <a-entity gltf-model="#product-glb" position="0 0 -5" scale="0 0 0"
+                    <a-entity id="product03" class="container" rotation="0 -10 0">
+                      <a-entity gltf-model="#plane-glb" position="0 0 -5" scale="0 0 0"
                       class="product clickable"
                       product-component="color:0x0000ff"
-                      animation__scale_up="property: scale; from: 0 0 0; to: 1 1 1; dur: 1000; easing: easeInOutSine; loop: false; startEvents: productScaleUp"
+                      animation__scale_up="property: scale; from: 0 0 0; to: 0.1 0.1 0.1; dur: 1000; easing: easeInOutSine; loop: false; startEvents: productScaleUp"
                       animation__move_up="property: position; from: 0 0 -5; to: 0 2 -5; dur: 1000; easing: easeInOutSine; loop: false; startEvents: productMoveUp"
                       animation__move_forward="property: position; to: 0 2 -2; dur: 1000; easing: easeInOutSine; loop: false; startEvents: productMoveForward"
                       animation__move_back="property: position; to: 0 2 -5; dur: 1000; easing: easeInOutSine; loop: false; startEvents: productMoveBack"
@@ -120,7 +135,17 @@
                       </a-entity>
                     </a-entity>
 
-
+                    <a-entity id="product04" class="container" rotation="0 -30 0">
+                      <a-entity gltf-model="#rocket-glb" position="0 0 -5" scale="0 0 0"
+                      class="product clickable"
+                      product-component="color:0x0000ff"
+                      animation__scale_up="property: scale; from: 0 0 0; to: 0.1 0.1 0.1; dur: 1000; easing: easeInOutSine; loop: false; startEvents: productScaleUp"
+                      animation__move_up="property: position; from: 0 0 -5; to: 0 2 -5; dur: 1000; easing: easeInOutSine; loop: false; startEvents: productMoveUp"
+                      animation__move_forward="property: position; to: 0 2 -2; dur: 1000; easing: easeInOutSine; loop: false; startEvents: productMoveForward"
+                      animation__move_back="property: position; to: 0 2 -5; dur: 1000; easing: easeInOutSine; loop: false; startEvents: productMoveBack"
+                      >
+                      </a-entity>
+                    </a-entity>
                   </a-entity>
 
                 </a-entity>
