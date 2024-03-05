@@ -101,6 +101,20 @@ function drawGraph(){
     bevelSegments: 10
   };
 
+
+  //infographic title
+  const titleDiv = document.createElement( 'div' );
+  titleDiv.className = 'label';
+  titleDiv.textContent = `GDP Contribution from AR and VR, USA and Rest of the World - US$ - PwC Estimates`;
+  titleDiv.style.backgroundColor = 'transparent';
+  titleDiv.style.fontSize = '22px';
+
+  const titleLabel = new CSS2DObject( titleDiv );
+  titleLabel.position.set(0,3,0);
+  scene.add(titleLabel)
+
+
+
   fetch("js/data.json")
   .then(res => res.json())
   .then(data =>{  
@@ -122,7 +136,7 @@ function drawGraph(){
           lineShape.lineTo(i * graphXSize/(graph["y"].length-1),value+ 0.01)
         }
 
-        //extrudes that thape
+        //extrudes the shape
         const geometry = new THREE.ExtrudeGeometry( lineShape, extrudeSettings );
         const mesh = new THREE.Mesh( geometry, material );
 
@@ -139,7 +153,7 @@ function drawGraph(){
         graphGroup.add(mesh)
       })
    
-      //cadds the graph to a group, so it can be centered as a whole
+      //adds the graph to a group, so it can be centered as a whole
       scene.add(graphGroup)
       const boundingBox = new THREE.Box3()
       boundingBox.setFromObject(graphGroup)
@@ -288,6 +302,8 @@ function drawGraph(){
           numberLabel.position.set(0.25,0,0);
           boxMesh.add(numberLabel)
       }
+
+      scene.position.y -= 1
   })
 }
 
