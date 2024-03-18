@@ -112,7 +112,7 @@ async function start() {
   document.body.addEventListener("pointermove", function (event) {
     if (!dragFlag) return;
 
-    var deltaX = event.clientX - prevMousePos.x;
+    let deltaX = event.clientX - prevMousePos.x;
     cube.rotation.y += deltaX * 0.01;
     prevMousePos.x = event.clientX;
     angVel.x = deltaX * 0.01;
