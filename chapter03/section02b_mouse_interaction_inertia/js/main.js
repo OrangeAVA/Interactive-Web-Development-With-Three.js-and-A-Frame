@@ -9,9 +9,9 @@ let damping = 0.96;
 let dragFlag = false;
 let prevMousePos = { x: 0, y: 0 };
 
-var angVel = { x: 0, y: 0 };
-var angAcceleration = { x: 0, y: 0 };
-var angDamping = 0.06;
+let angVel = { x: 0, y: 0 };
+let angAcceleration = { x: 0, y: 0 };
+let angDamping = 0.06;
 
 window.addEventListener("load", function () {
   start();
